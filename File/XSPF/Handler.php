@@ -123,108 +123,108 @@ class File_XSPF_Handler
         // normal.
         $depth = count($this->_tag_stack);
         switch (end($this->_tag_stack)) {
-        case "TITLE":
-            if ($depth == 2) {
-                // This is the content of the playlist title.
-                $this->_xspf->setTitle($data);
-            } elseif ($depth == 4) {
-                // This is the content of thr track title.
-                $this->_curr_track->setTitle($data);
-            }
-            break;
-        case "CREATOR":
-            if ($depth == 2) {
-                // This is the content of the playlist creator.
-                $this->_xspf->setCreator($data);
-            } elseif ($depth == 4) {
-                // This is the content of the track creator.
-                $this->_curr_track->setCreator($data);
-            }
-            break;
-        case "ANNOTATION":
-            if ($depth == 2) {
-                // This is the content of the playlist annotation.
-                $this->_xspf->setAnnotation($data);
-            } elseif ($depth == 4) {
-                // This is the content of the track annotation.
-                $this->_curr_track->setAnnotation($data);
-            }
-            break;
-        case "INFO":
-            if ($depth == 2) {
-                // This is the content of the playlist info.
-                $this->_xspf->setInfo($data);
-            } elseif ($depth == 4) {
-                // This is the content of the track info.
-                $this->_curr_track->setInfo($data);
-            }
-            break;
-        case "LOCATION":
-            $location = new File_XSPF_Location($data);
-            if ($depth == 2) {
-                // This is the content of the playlist location.
-                $this->_xspf->setLocation($location);
-            } elseif ($depth == 3) {
-                // This is the content of an attribution location.
-                if (in_array("ATTRIBUTION", $this->_tag_stack))
-                    $this->_xspf->addAttribution($location);
-            } elseif ($depth == 4) {
-                // This is the content of a track location.
-                $this->_curr_track->addLocation($location);
-            }
-            break;
-        case "IDENTIFIER":
-            $identifier = new File_XSPF_Identifier($data);
-            if ($depth == 2) {
-                // This is the content of the playlist identifier.
-                $this->_xspf->setIdentifier($identifier);
-            } elseif ($depth == 3) {
-                // This is the content of an attribution identifier.
-                if (in_array("ATTRIBUTION", $this->_tag_stack))
-                    $this->_xspf->addAttribution($identifier);
-            } elseif ($depth == 4) {
-                // This is the content of the track identifier.
-                $this->_curr_track->setIdentifier($identifier);
-            }
-            break;
-        case "IMAGE":
-            if ($depth == 2) {
-                // This is the content of the playlist image.
-                $this->_xspf->setImage($data);
-            } elseif ($depth == 4) {
-                // This is the content of the track image.
-                $this->_curr_track->setImage($data);
-            }
-            break;
-        case "DATE":
-            // This is the content of the playlist date.
-            $this->_xspf->setDate($data);
-            break;
-        case "LICENSE":
-            // This is the content of the playlist license.
-            $this->_xspf->setLicense($data);
-            break;
-        case "DURATION":
-            // This is the content of the track duration.
-            $this->_curr_track->setDuration($data);
-            break;
-        case "TRACKNUM":
-            // This is the content of the track number.
-            $this->_curr_track->setTrackNumber($data);
-            break;
-        case "ALBUM":
-            // This is the content of the track album.
-            $this->_curr_track->setAlbum($data);
-            break;
-        case "META":
-            // This is the content of a meta element.
-            $this->_curr_meta->setContent($data);
-            break;
-        case "LINK":
-            // This is the content of a link element.
-            $this->_curr_link->setContent($data);
-            break;
-        }
+            case "TITLE":
+                if ($depth == 2) {
+                    // This is the content of the playlist title.
+                    $this->_xspf->setTitle($data);
+                } elseif ($depth == 4) {
+                    // This is the content of thr track title.
+                    $this->_curr_track->setTitle($data);
+                }
+                break;
+            case "CREATOR":
+                if ($depth == 2) {
+                    // This is the content of the playlist creator.
+                    $this->_xspf->setCreator($data);
+                } elseif ($depth == 4) {
+                    // This is the content of the track creator.
+                    $this->_curr_track->setCreator($data);
+                }
+                break;
+            case "ANNOTATION":
+                if ($depth == 2) {
+                    // This is the content of the playlist annotation.
+                    $this->_xspf->setAnnotation($data);
+                } elseif ($depth == 4) {
+                    // This is the content of the track annotation.
+                    $this->_curr_track->setAnnotation($data);
+                }
+                break;
+            case "INFO":
+                if ($depth == 2) {
+                    // This is the content of the playlist info.
+                    $this->_xspf->setInfo($data);
+                } elseif ($depth == 4) {
+                    // This is the content of the track info.
+                    $this->_curr_track->setInfo($data);
+                }
+                break;
+            case "LOCATION":
+                $location = new File_XSPF_Location($data);
+                if ($depth == 2) {
+                    // This is the content of the playlist location.
+                    $this->_xspf->setLocation($location);
+                } elseif ($depth == 3) {
+                    // This is the content of an attribution location.
+                    if (in_array("ATTRIBUTION", $this->_tag_stack))
+                        $this->_xspf->addAttribution($location);
+                } elseif ($depth == 4) {
+                    // This is the content of a track location.
+                    $this->_curr_track->addLocation($location);
+                }
+                break;
+            case "IDENTIFIER":
+                $identifier = new File_XSPF_Identifier($data);
+                if ($depth == 2) {
+                    // This is the content of the playlist identifier.
+                    $this->_xspf->setIdentifier($identifier);
+                } elseif ($depth == 3) {
+                    // This is the content of an attribution identifier.
+                    if (in_array("ATTRIBUTION", $this->_tag_stack))
+                        $this->_xspf->addAttribution($identifier);
+                } elseif ($depth == 4) {
+                    // This is the content of the track identifier.
+                    $this->_curr_track->setIdentifier($identifier);
+                }
+                break;
+            case "IMAGE":
+                if ($depth == 2) {
+                    // This is the content of the playlist image.
+                    $this->_xspf->setImage($data);
+                } elseif ($depth == 4) {
+                    // This is the content of the track image.
+                    $this->_curr_track->setImage($data);
+                }
+                break;
+            case "DATE":
+                // This is the content of the playlist date.
+                $this->_xspf->setDate($data);
+                break;
+            case "LICENSE":
+                // This is the content of the playlist license.
+                $this->_xspf->setLicense($data);
+                break;
+            case "DURATION":
+                // This is the content of the track duration.
+                $this->_curr_track->setDuration($data);
+                break;
+            case "TRACKNUM":
+                // This is the content of the track number.
+                $this->_curr_track->setTrackNumber($data);
+                break;
+            case "ALBUM":
+                // This is the content of the track album.
+                $this->_curr_track->setAlbum($data);
+                break;
+            case "META":
+                // This is the content of a meta element.
+                $this->_curr_meta->setContent($data);
+                break;
+            case "LINK":
+                // This is the content of a link element.
+                $this->_curr_link->setContent($data);
+                break;
+       }
     }
     
     /**
@@ -251,44 +251,44 @@ class File_XSPF_Handler
         // belongs.
         $depth = count($this->_tag_stack);
         switch ($name) {
-        case "TRACK":
-            // This is the end of the current track element.  This means
-            // we can now close it and add it to the playlist.
-            $this->_xspf->addTrack($this->_curr_track);
-            break;
-        case "LINK":
-            // This is the end of the current link element.  This means
-            // we can now close it and add it to the right context.
-            if ($depth == 2) {
-                // This link element belongs to the playlist.
-                $this->_xspf->addLink($this->_curr_link);
-            } elseif ($depth == 4) {
-                // This link element belongs to a track.
-                $this->_curr_track->addLink($this->_curr_link);
-            }
-            break;
-        case "META":
-            // This is the end of the current meta element.  This means
-            // we can now close it and add it to the right context.
-            if ($depth == 2) {
-                // This meta element belongs to the playlist.
-                $this->_xspf->addMeta($this->_curr_meta);
-            } elseif ($depth == 4) {
-                // This meta element belongs to a track.
-                $this->_curr_track->addMeta($this->_curr_meta);
-            }
-            break;
-        case "EXTENSION":
-            // This is the end of the current extension element.  This
-            // means we can now close it and add it to the right context.
-            if ($depth == 2) {
-                // This extension element belongs to the playlist.
-                $this->_xspf->addExtension($this->_curr_extn);
-            } elseif ($depth == 4) {
-                // This extension element belongs to a track.
-            	$this->_curr_track->addExtension($this->_curr_extn);
-            }
-            break;
+            case "TRACK":
+                // This is the end of the current track element.  This means
+                // we can now close it and add it to the playlist.
+                $this->_xspf->addTrack($this->_curr_track);
+                break;
+            case "LINK":
+                // This is the end of the current link element.  This means
+                // we can now close it and add it to the right context.
+                if ($depth == 2) {
+                    // This link element belongs to the playlist.
+                    $this->_xspf->addLink($this->_curr_link);
+                } elseif ($depth == 4) {
+                    // This link element belongs to a track.
+                    $this->_curr_track->addLink($this->_curr_link);
+                }
+                break;
+            case "META":
+                // This is the end of the current meta element.  This means
+                // we can now close it and add it to the right context.
+                if ($depth == 2) {
+                    // This meta element belongs to the playlist.
+                    $this->_xspf->addMeta($this->_curr_meta);
+                } elseif ($depth == 4) {
+                    // This meta element belongs to a track.
+                    $this->_curr_track->addMeta($this->_curr_meta);
+                }
+                break;
+            case "EXTENSION":
+                // This is the end of the current extension element.  This
+                // means we can now close it and add it to the right context.
+                if ($depth == 2) {
+                    // This extension element belongs to the playlist.
+                    $this->_xspf->addExtension($this->_curr_extn);
+                } elseif ($depth == 4) {
+                    // This extension element belongs to a track.
+                	$this->_curr_track->addExtension($this->_curr_extn);
+                }
+                break;
         }
         // Remove the current element from the tag stack.
         array_pop($this->_tag_stack);
@@ -325,48 +325,48 @@ class File_XSPF_Handler
             return;
         }
         switch ($name) {
-        case "PLAYLIST":
-            // This is the start of a playlist element.
-            if (isset($attribs['VERSION'])) {
-                $this->_xspf->_version = $attribs['VERSION'];
-            }
-            if (isset($attribs['XMLS'])) {
-                $this->_xspf->_xmls = $attribs['XMLNS'];
-            }
-            break;
-        case "TRACK":
-            // This is the start of a track element.  The element is
-            // stored in an object parameter to allow adding of sub-
-            // elements to the track.
-            $this->_curr_track = new File_XSPF_Track();
-            break;
-        case "LINK":
-            // This is the start of a link element.  The element is
-            // stored in an object parameter to allow adding of link
-            // content.
-            $this->_curr_link  = new File_XSPF_Link();
-            if (isset($attribs['REL'])) {
-                $this->_curr_link->setRelationship($attribs['REL']);
-            }
-            break;
-        case "META":
-            // This is the start of a meta element.  The element is
-            // stored in an object parameter to allow adding of meta
-            // content.
-            $this->_curr_meta = new File_XSPF_Meta();
-            if (isset($attribs['REL'])) {
-                $this->_curr_meta->setRelationship($attribs['REL']);
-            }
-            break;
-        case "EXTENSION":
-            // This is the start of a extension object.  The element
-            // is stored in an object parameter to allow adding of
-            // extension content.
-            $this->_curr_extn = new File_XSPF_Extension();
-            if (isset($attribs['APPLICATION'])) {
-                $this->_curr_extn->setApplication($attribs['APPLICATION']);
-            }
-            break;
+            case "PLAYLIST":
+                // This is the start of a playlist element.
+                if (isset($attribs['VERSION'])) {
+                    $this->_xspf->_version = $attribs['VERSION'];
+                }
+                if (isset($attribs['XMLS'])) {
+                    $this->_xspf->_xmls = $attribs['XMLNS'];
+                }
+                break;
+            case "TRACK":
+                // This is the start of a track element.  The element is
+                // stored in an object parameter to allow adding of sub-
+                // elements to the track.
+                $this->_curr_track = new File_XSPF_Track();
+                break;
+            case "LINK":
+                // This is the start of a link element.  The element is
+                // stored in an object parameter to allow adding of link
+                // content.
+                $this->_curr_link  = new File_XSPF_Link();
+                if (isset($attribs['REL'])) {
+                    $this->_curr_link->setRelationship($attribs['REL']);
+                }
+                break;
+            case "META":
+                // This is the start of a meta element.  The element is
+                // stored in an object parameter to allow adding of meta
+                // content.
+                $this->_curr_meta = new File_XSPF_Meta();
+                if (isset($attribs['REL'])) {
+                    $this->_curr_meta->setRelationship($attribs['REL']);
+                }
+                break;
+            case "EXTENSION":
+                // This is the start of a extension object.  The element
+                // is stored in an object parameter to allow adding of
+                // extension content.
+                $this->_curr_extn = new File_XSPF_Extension();
+                if (isset($attribs['APPLICATION'])) {
+                    $this->_curr_extn->setApplication($attribs['APPLICATION']);
+                }
+                break;
         }
         // Add the current element to the tag stack.
         array_push($this->_tag_stack, $name);
