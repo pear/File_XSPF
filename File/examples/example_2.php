@@ -2,7 +2,8 @@
 require_once 'File/XSPF.php';
 
 // Open my 'favourites' playlist.
-$favs      =& new File_XSPF('/home/joe/tunes/favourites.xspf');
+$favs      =& new File_XSPF();
+$favs->parseFile('/home/joe/tunes/favourites.xspf');
 $radiohead =& new File_XSPF();
 
 $radiohead->setCreator('Joe Bloggs');

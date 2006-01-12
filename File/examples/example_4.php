@@ -3,7 +3,8 @@ require_once('File/XSPF.php');
 
 $username = 'djg';
 
-$recent = new File_XSPF("http://ws.audioscrobbler.com/1.0/user/$username/recenttracks.xspf");
+$recent = new File_XSPF();
+$recent->parseFile("http://ws.audioscrobbler.com/1.0/user/$username/recenttracks.xspf");
 $tracks = $recent->getTracks();
 if (count($tracks)) {
     $latest = current($tracks);
