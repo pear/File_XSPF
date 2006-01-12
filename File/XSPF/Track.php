@@ -52,6 +52,62 @@ class File_XSPF_Track
      */
     var $_annotation;
     /**
+     * Number of album elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_album       = 0;
+    /**
+     * Number of annotation elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_annotation  = 0;
+    /**
+     * Number of creator elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_creator     = 0;
+    /**
+     * Number of duration elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_duration    = 0;
+    /**
+     * Number of image elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_image       = 0;
+    /**
+     * Number of info elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_info        = 0;
+    /**
+     * Number of title elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_title       = 0;
+    /**
+     * Number of tracknum elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_tracknum    = 0;
+    /**
      * The human-readable name of this track's creator, e.g. 'Radiohead'.
      *
      * @access  private
@@ -141,7 +197,7 @@ class File_XSPF_Track
      */
     function addExtension($extension)
     {
-        if (is_object($extension) && strtolower(get_class($extension)) == 'file_xspf_extension') {
+        if (is_object($extension) && is_a($extension, 'file_xspf_extension')) {
             $this->_extensions[] = $extension;
         }
     }
@@ -157,7 +213,7 @@ class File_XSPF_Track
      */
     function addLink($link)
     {
-        if (is_object($link) && strtolower(get_class($link)) == 'file_xspf_link') {
+        if (is_object($link) && is_a($link, 'file_xspf_link')) {
             $this->_links[] = $link;
         }
     }
@@ -175,12 +231,15 @@ class File_XSPF_Track
      */
     function addLocation($location, $append = true)
     {
-        if (File_XSPF::_validateURL($location)) {
+        if (File_XSPF::_validateURL($location->_url)) {
             if ($append) {
                 array_push($this->_locations, $location);
             } else {
                 array_unshift($this->_locations, $location);
             }
+            return true;
+        } else {
+            return false;
         }
     }
     
@@ -195,7 +254,7 @@ class File_XSPF_Track
      */
     function addMeta($meta)
     {
-        if (is_object($meta) && strtolower(get_class($meta)) == 'file_xspf_meta') {
+        if (is_object($meta) && is_a($meta, 'file_xspf_meta')) {
             $this->_meta[] = $meta;
         }
     }
@@ -336,10 +395,16 @@ class File_XSPF_Track
      *
      * @access  public
      * @param   string $annotation a human-readable comment on this track.
+     * @return  false
      */
     function setAnnotation($annotation)
     {
-        $this->_annotation = $annotation;
+        if (strcmp($annotation, strip_tags($annotation)) == 0) {
+            $this->_annotation = $annotation;
+            return true;
+        } else {
+            return false;
+        }
     }
     
     /**
@@ -371,6 +436,9 @@ class File_XSPF_Track
     {
         if (File_XSPF::_validateURL($info)) {
             $this->_info = $info;
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -432,6 +500,9 @@ class File_XSPF_Track
     {
         if (File_XSPF::_validateURL($image)) {
             $this->_image = $image;
+            return true;
+        } else {
+            return false;
         }
     }
     
@@ -472,10 +543,16 @@ class File_XSPF_Track
      *
      * @access  public
      * @param   int     $trackNum the ordinal position of the track on its collection.
+     * @return  boolean
      */
     function setTrackNumber($trackNum)
     {
-        $this->_trackNum = intval($trackNum);
+        if (ctype_digit($trackNum) && $trackNum >= 0) {
+            $this->_trackNum = intval($trackNum);
+            return true;
+        } else {
+            return false;
+        }
     }
     
     /**
@@ -501,10 +578,16 @@ class File_XSPF_Track
      *
      * @access  public
      * @param   int     $duration the length of this track in milliseconds.
+     * @return  boolean
      */
     function setDuration($duration)
     {
-        $this->_duration = intval($duration);
+        if (ctype_digit($duration) && $duration >= 0) {
+            $this->_duration = intval($duration);
+            return true;
+        } else {
+            return false;
+        }
     }
     
     /**

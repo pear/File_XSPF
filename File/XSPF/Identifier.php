@@ -84,8 +84,11 @@ class File_XSPF_Identifier {
      */
     function setUri($uri)
     {
-        if (File_XSPF::_validateURI($uri)) {
+        if (File_XSPF::_validateUrn($uri)) {
             $this->_uri = $uri;
+            return true;
+        } else {
+            return false;
         }
     }
     

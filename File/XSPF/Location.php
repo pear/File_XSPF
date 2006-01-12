@@ -85,6 +85,9 @@ class File_XSPF_Location {
     {
         if (File_XSPF::_validateUrl($url)) {
             $this->_url = $url;
+            return true;
+        } else {
+            return false;
         }
     }
     

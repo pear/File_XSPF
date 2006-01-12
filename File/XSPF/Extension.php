@@ -91,8 +91,11 @@ class File_XSPF_Extension
      */
     function setApplication($application)
     {
-        if (File_XSPF::_validateURI($application)) {
+        if (File_XSPF::_validateUri($application)) {
             $this->_application = $application;
+            return true;
+        } else {
+            return false;
         }
     }
     

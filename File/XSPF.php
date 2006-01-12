@@ -33,7 +33,7 @@
 /**
  * 
  */
-require_once 'PEAR.php';
+//require_once 'PEAR.php';
 
 require_once 'File/XSPF/Extension.php';
 require_once 'File/XSPF/Handler.php';
@@ -81,6 +81,10 @@ define('FILE_XSPF_ERROR_FILE_OPENING',    2);
  * This constant signfies an error writing to a file.
  */
 define('FILE_XSPF_ERROR_FILE_WRITING',    3);
+/**
+ * This constant signifies an error parsing the XSPF file.
+ */
+define('FILE_XSPF_ERROR_PARSING_FAILURE', 4);
 
 /**
  * This is the main class for this package.
@@ -111,6 +115,83 @@ class File_XSPF
      * @var     array
      */
     var $_attributions  = array();
+    /**
+     * Number of annotation elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_annotation  = 0;
+    /**
+     * Number of attribution elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_attribution = 0;
+    /**
+     * Number of creator elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_creator     = 0;
+    /**
+     * Number of date elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_date        = 0;
+    /**
+     * Number of identifier elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_identifier  = 0;
+    /**
+     * Number of image elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_image       = 0;
+    /**
+     * Number of info elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_info        = 0;
+    /**
+     * Number of license elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_license     = 0;
+    /**
+     * Number of location elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_location    = 0;
+    /**
+     * Number of title elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_title       = 0;
+    /**
+     * Number of tracklist elements found in file parsing session.
+     *
+     * @access  private
+     * @var     int
+     */
+    var $_count_tracklist   = 0;
     /**
      * Human-readable name of the entity responsible for this playlist.
      *
@@ -209,24 +290,35 @@ class File_XSPF
      * @var     string
      */
     var $_xmlns         = "http://xspf.org/ns/0/";
+    /**
+     * Enter description here...
+     *
+     * @var     boolean
+     */
+    var $_parse_error   = false;
     
     /**
      * Creates a new File_XSPF object.
-     * 
-     * This constructor optionally takes a file path from which to read an
-     * existing XSPF file.  If no path is provided, the constructor will
-     * build the minimum object required by the XSPF specification.
      *
      * @access  public
-     * @param   string  $path the path to an XSPF file.
-     * @return  mixed   an instance of File_XSPF if succesful, or PEAR_Error if unsuccessful.
-     * @throws  XML_Parser_Error
+     * @return  File_XSPF
      */
-    function File_XSPF($path = null)
+    function File_XSPF()
     {
-        if (is_null($path))
-            return $this;
-
+    }
+    
+    /**
+     * Parses an existing XSPF file.
+     * 
+     * This method parses an existing XSPF file into the current File_XSPF instance.  If
+     * successful, this function returns true, otherwise it will return an instance of
+     * PEAR_Error.
+     *
+     * @access  public
+     * @param   string $path
+     * @return  mixed
+     */
+    function parseFile($path) {
         $parser =& new XML_Parser();
         $handle =& new File_XSPF_Handler($this);
 
@@ -239,26 +331,10 @@ class File_XSPF
         if (PEAR::isError($result)) {
             return PEAR::raiseError($result->getMessage(), $result->getCode());
         }
-        return $this;
-    }
-    
-    /**
-     * Write out an XML tag for the specified property.
-     * 
-     * This method returns a string containing a well-formed XML element for the
-     * specified property.  If the element contains no data, an empty string is
-     * returned.
-     *
-     * @access  private
-     * @param   string  $element the element required to be written.
-     * @return  string  the well-formatted XML tag for the provided element.
-     */
-    function _writeElement($element, $depth = 1)
-    {
-        if (! is_null($this->{'_' . $element}))
-            return ('<' . $element . '>' . $this->{'_' . $element} . '</' . $element . '>');
-        else
-            return '';
+        if (PEAR::isError($this->_parse_error)) {
+            return PEAR::raiseError($this->_parse_error->getMessage(), $this->_parse_error->getCode());
+        }
+        return true;
     }
     
     /**
@@ -300,7 +376,7 @@ class File_XSPF
      */
     function addExtension($extension)
     {
-        if (is_object($extension) && strtolower(get_class($extension)) == "file_xspf_extension") {
+        if (is_object($extension) && is_a($extension, "file_xspf_extension")) {
             $this->_extensions[] = $extension;
         }
     }
@@ -317,7 +393,7 @@ class File_XSPF
      */
     function addLink($link)
     {
-        if (is_object($link) && strtolower(get_class($link)) == "file_xspf_link") {
+        if (is_object($link) && is_a($link, "file_xspf_link")) {
             $this->_links[] = $link;
         }
     }
@@ -334,7 +410,7 @@ class File_XSPF
      */
     function addMeta($meta)
     {
-        if (is_object($meta) && strtolower(get_class($meta)) == "file_xspf_meta") {
+        if (is_object($meta) && is_a($meta, "file_xspf_meta")) {
             $this->_meta[] = $meta;
         }
     }
@@ -352,7 +428,7 @@ class File_XSPF
      */
     function addTrack($track)
     {
-        if (is_object($track) && strtolower(get_class($track)) == "file_xspf_track") {
+        if (is_object($track) && is_a($track, "file_xspf_track")) {
             $this->_tracks[] = $track;
         }
     }
@@ -404,9 +480,9 @@ class File_XSPF
         } else {
             $attributions = array();
             foreach ($this->_attributions as $attribution) {
-                if ($filter & FILE_XSPF_ATTRIBUTION_IDENTIFIER && strtolower(get_class($attribution)) == 'file_xspf_identifier') {
+                if ($filter & FILE_XSPF_ATTRIBUTION_IDENTIFIER && is_a($attribution, 'file_xspf_identifier')) {
                     $attributions[] = $attribution;
-                } elseif ($filter & FILE_XSPF_ATTRIBUTION_LOCATION && strtolower(get_class($attribution)) == 'file_xspf_location') {
+                } elseif ($filter & FILE_XSPF_ATTRIBUTION_LOCATION && is_a($attribution, 'file_xspf_location')) {
                     $attributions[] = $attribution;
                 }
             }
@@ -609,10 +685,16 @@ class File_XSPF
      *
      * @access  public
      * @param   string $annotation a human-readable playlist description.
+     * @return  boolean
      */
     function setAnnotation($annotation)
     {
-        $this->_annotation = $annotation;
+        if (strcmp($annotation, strip_tags($annotation)) == 0) {
+            $this->_annotation = $annotation;
+            return true;
+        } else {
+            return false;
+        }
     }
     
     /**
@@ -664,8 +746,11 @@ class File_XSPF
      */
     function setIdentifier($identifier)
     {
-        if (File_XSPF::_validateURN($identifier)) {
+        if (File_XSPF::_validateURN($identifier->_uri)) {
             $this->_identifier = $identifier;
+            return true;
+        } else {
+            return false;
         }
     }
         
@@ -683,6 +768,9 @@ class File_XSPF
     {
         if (File_XSPF::_validateURL($image)) {
             $this->_image = $image;
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -699,7 +787,10 @@ class File_XSPF
     {
         if (File_XSPF::_validateURL($info)) {
             $this->_info = $info;
-        }
+            return true;
+        } else {
+            return false;
+        }   
     }
     
     /**
@@ -718,7 +809,10 @@ class File_XSPF
     {
         if (File_XSPF::_validateURL($license)) {
             $this->_license = $license;
-        }
+            return true;
+        } else {
+            return false;
+        }   
     }
     
     /**
@@ -734,9 +828,12 @@ class File_XSPF
      */
     function setLocation($location)
     {
-        if (File_XSPF::_validateURL($location)) {
+        if (File_XSPF::_validateURL($location->_url)) {
             $this->_location = $location;
-        }
+            return true;
+        } else {
+            return false;
+        }   
     }
     
     /**
@@ -764,7 +861,7 @@ class File_XSPF
      */
     function _validateUri($uri)
     {
-        return (Validate::uri($uri));
+        return (File_XSPF::_validateUrl($uri, array('strict' => 'false')) && File_XSPF::_validateUrn($uri));
     }
     
     /**
@@ -778,7 +875,7 @@ class File_XSPF
      */
     function _validateUrl($url)
     {
-        return (Validate::uri($url, array('allowed_schemes' => array('file', 'ftp', 'http', 'https'))));
+        return (Validate::uri($url, array('strict' => ';/?:@$,')));
     }
     
     /**
@@ -792,7 +889,8 @@ class File_XSPF
      */
     function _validateUrn($urn)
     {
-        return (Validate::uri($urn));
+        //return true;
+        return (Validate::uri($urn, array('strict' => false)));
     }
     
     /**

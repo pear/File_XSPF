@@ -94,6 +94,9 @@ class File_XSPF_Link
     {
         if (File_XSPF::_validateURL($content)) {
             $this->_content = $content;
+            return true;
+        } else {
+            return false;
         }
     }
     
@@ -108,8 +111,11 @@ class File_XSPF_Link
      */
     function setRelationship($rel)
     {
-        if (File_XSPF::_validateURI($rel)) {
+        if (File_XSPF::_validateUri($rel)) {
             $this->_rel = $rel;
+            return true;
+        } else {
+            return false;
         }
     }
     

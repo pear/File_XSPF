@@ -105,8 +105,11 @@ class File_XSPF_Meta
      */
     function setRelationship($rel)
     {
-        if (File_XSPF::_validateURI($rel)) {
+        if (File_XSPF::_validateUri($rel)) {
             $this->_rel = $rel;
+            return true;
+        } else {
+            return false;
         }
     }
     
