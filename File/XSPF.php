@@ -21,7 +21,7 @@
 
 /**
  * PHP version 4
- * 
+ *
  * @author      David Grant <david@grant.org.uk>
  * @copyright   Copyright (c) 2005 David Grant
  * @license     http://www.gnu.org/copyleft/lesser.html GNU LGPL
@@ -31,7 +31,7 @@
  */
 
 /**
- * 
+ *
  */
 //require_once 'PEAR.php';
 
@@ -50,21 +50,21 @@ require_once 'XML/Tree.php';
 
 /**
  * Constant to identify an attribution as a location element.
- * 
+ *
  * This constant may be passed as the second argument to the
  * {@link File_XSPF::addAttribution()} method of this class to
  * signify that the passed data is a location element.
- * 
+ *
  * @link    File_XSPF::addAttribution()
  */
 define("FILE_XSPF_ATTRIBUTION_LOCATION",   1);
 /**
  * Constant to identify an attribution as an identifier element.
- * 
+ *
  * This constant may be passed as the second argument to the
  * {@link File_XSPF::addAttribution()} method of this class to
  * signify that the passed data is an identifier element.
- * 
+ *
  * @link    File_XSPF::addAttribution()
  */
 define('FILE_XSPF_ATTRIBUTION_IDENTIFIER', 2);
@@ -88,11 +88,11 @@ define('FILE_XSPF_ERROR_PARSING_FAILURE', 4);
 
 /**
  * This is the main class for this package.
- * 
+ *
  * This class serves as the central point for all other classes in this
  * package, and provides the majority of manipulative methods for outputting
  * the XSPF playlist.
- * 
+ *
  * @example     examples/example_1.php  Generating a One Track Playlist
  * @example     examples/example_2.php  Filtering an Existing Playlist
  * @example     examples/example_3.php  Cataloging a Music Collection
@@ -100,7 +100,7 @@ define('FILE_XSPF_ERROR_PARSING_FAILURE', 4);
  * @package     File_XSPF
  */
 class File_XSPF
-{   
+{
     /**
      * A human-readable comment on this playlist.
      *
@@ -296,7 +296,7 @@ class File_XSPF
      * @var     boolean
      */
     var $_parse_error   = false;
-    
+
     /**
      * Creates a new File_XSPF object.
      *
@@ -306,10 +306,10 @@ class File_XSPF
     function File_XSPF()
     {
     }
-    
+
     /**
      * Parses an existing XSPF file.
-     * 
+     *
      * This method parses an existing XSPF file into the current File_XSPF instance.  If
      * successful, this function returns true, otherwise it will return an instance of
      * PEAR_Error.
@@ -336,15 +336,46 @@ class File_XSPF
         }
         return true;
     }
-    
+
+    /**
+     * Parses an existing XSPF file.
+     *
+     * This method parses an XSPF text stream into the current File_XSPF instance.  If
+     * successful, this function returns true, otherwise it will return an instance of
+     * PEAR_Error.
+     *
+     * @access  public
+     * @param   string $text
+     * @return  mixed
+     */
+    function parse($text) {
+        $parser =& new XML_Parser();
+        $handle =& new File_XSPF_Handler($this);
+
+        $result = $parser->setInput($text);
+        if (PEAR::isError($result)) {
+            return PEAR::raiseError($result->getMessage(), $result->getCode());
+        }
+        $parser->setHandlerObj($handle);
+        $result = $parser->parse();
+        if (PEAR::isError($result)) {
+            return PEAR::raiseError($result->getMessage(), $result->getCode());
+        }
+        if (PEAR::isError($this->_parse_error)) {
+            return PEAR::raiseError($this->_parse_error->getMessage(), $this->_parse_error->getCode());
+        }
+        return true;
+    }
+
+
     /**
      * Add an identifier or location tag to the playlist attribution.
-     * 
-     * This method adds a identifier or location tag to the playlist 
+     *
+     * This method adds a identifier or location tag to the playlist
      * attribution.  The first parameter must be an instance of either the
      * File_XSPF_Identifier or File_XSPF_Location classes.
-     * 
-     * The third parameter, $append, affects the output of the order of the 
+     *
+     * The third parameter, $append, affects the output of the order of the
      * children of the attribution element.  According to the specification, the
      * children of the attribution element should be in chronological order, so
      * this parameter is included to make the job somewhat more simplistic.
@@ -363,12 +394,12 @@ class File_XSPF
             array_unshift($this->_attributions, $attribution);
         }
     }
-    
+
     /**
      * Add an extension element to the playlist.
-     * 
-     * This method adds an extension element to the playlist.  This function 
-     * will only accept instances of the File_XSPF_Extension class, which is 
+     *
+     * This method adds an extension element to the playlist.  This function
+     * will only accept instances of the File_XSPF_Extension class, which is
      * documented elsewhere.
      *
      * @access  public
@@ -380,12 +411,12 @@ class File_XSPF
             $this->_extensions[] = $extension;
         }
     }
-    
+
     /**
      * Add a link element to the playlist.
-     * 
-     * This method adds a link element to the playlist.  The $link parameter 
-     * must be a instance of the {@link File_XSPF_Link File_XSPF_Link} class or 
+     *
+     * This method adds a link element to the playlist.  The $link parameter
+     * must be a instance of the {@link File_XSPF_Link File_XSPF_Link} class or
      * the method will fail.
      *
      * @access  public
@@ -397,11 +428,11 @@ class File_XSPF
             $this->_links[] = $link;
         }
     }
-    
+
     /**
      * Add a meta element to the playlist.
-     * 
-     * This method adds a meta element to the playlist.  The $meta parameter 
+     *
+     * This method adds a meta element to the playlist.  The $meta parameter
      * must be an instance of the {@link File_XSPF_Meta File_XSPF_Meta} class or
      * the method will fail.
      *
@@ -414,13 +445,13 @@ class File_XSPF
             $this->_meta[] = $meta;
         }
     }
-    
+
     /**
      * Add a track element to the playlist.
-     * 
-     * This method adds a track element to the playlist.  Complimentary 
+     *
+     * This method adds a track element to the playlist.  Complimentary
      * documentation exists for the {@link File_XSPF_Track File_XSPF_Track}
-     * class, and should be the focus of the majority of attention for users 
+     * class, and should be the focus of the majority of attention for users
      * building a XSPF playlist.
      *
      * @access  public
@@ -432,10 +463,10 @@ class File_XSPF
             $this->_tracks[] = $track;
         }
     }
-    
+
     /**
      * Get the annotation for this playlist.
-     * 
+     *
      * This method returns the contents of the annotation element, which
      * is the human-readable comment of this playlist.
      *
@@ -446,10 +477,10 @@ class File_XSPF
     {
         return $this->_annotation;
     }
-    
+
     /**
      * Get an array of attribution elements.
-     * 
+     *
      * This method returns an array of attribution elements.
      *
      * @access  public
@@ -463,13 +494,13 @@ class File_XSPF
             return $this->_attributions[$offset];
         }
     }
-    
+
     /**
      * Get an array of attribution elements.
      *
      * This method returns a list of attribution elements, which is either an instance
      * of File_XSPF_Identifier or File_XSPF_Location.
-     * 
+     *
      * @access  public
      * @return  array
      */
@@ -487,12 +518,12 @@ class File_XSPF
                 }
             }
             return $attributions;
-        }   
+        }
     }
-    
+
     /**
      * Get the author of this playlist.
-     * 
+     *
      * This method returns the contents of the creator element, which
      * represents the author of this playlist.
      *
@@ -506,7 +537,7 @@ class File_XSPF
 
     /**
      * Get the date of creation for this playlist.
-     * 
+     *
      * This method returns the date on which this playlist was created (not
      * last modified), formatted as a XML schema dateTime, which is the same as
      * the 'r' parameter for {@link http://php.net/date date()} in PHP5.
@@ -518,10 +549,10 @@ class File_XSPF
     {
         return $this->_date;
     }
-    
+
     /**
      * Get the duration of this playlist in seconds.
-     * 
+     *
      * This method returns the length of this playlist in seconds.  These times
      * are taken from the duration elements of the playlist track elements.
      *
@@ -536,11 +567,11 @@ class File_XSPF
         }
         return (floor($duration / 1000));
     }
-    
+
     /**
      * Get an identifier for this playlist.
-     * 
-     * This method returns a canonical ID for this playlist as a URN.  An 
+     *
+     * This method returns a canonical ID for this playlist as a URN.  An
      * example might be an SHA1 hash of the tracklisting, e.g.
      * sha1://0beec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33
      *
@@ -551,12 +582,12 @@ class File_XSPF
     {
         return $this->_identifier;
     }
-    
+
     /**
      * Get the image URL for this playlist.
-     * 
+     *
      * This method returns the URL of the image used to represent this
-     * playlist.  This image should be used if individual tracks belonging 
+     * playlist.  This image should be used if individual tracks belonging
      * to this playlist do not have their own image.
      *
      * @access  public
@@ -566,10 +597,10 @@ class File_XSPF
     {
         return $this->_image;
     }
-    
+
     /**
      * Get the URL of a web page containing information about this playlist.
-     * 
+     *
      * This method returns the URL of a web page, allowing the user to find
      * out more information about the author of the playlist, and find other
      * playlists.
@@ -581,15 +612,15 @@ class File_XSPF
     {
         return $this->_info;
     }
-    
+
     /**
      * Get the license for this playlist.
-     * 
-     * This method returns the URL of the license under which this playlist has 
+     *
+     * This method returns the URL of the license under which this playlist has
      * been or will be released, such as http://www.gnu.org/copyleft/lesser.html
-     * for the LGPL.  If the specified license contains a requirement for 
-     * attribution, users should use the 
-     * {@link File_XSPF::getAttribution() getAttribution} method to retrieve an 
+     * for the LGPL.  If the specified license contains a requirement for
+     * attribution, users should use the
+     * {@link File_XSPF::getAttribution() getAttribution} method to retrieve an
      * array of attributions.
      *
      * @access  public
@@ -600,10 +631,10 @@ class File_XSPF
     {
         return $this->_license;
     }
-    
+
     /**
      * Get an array of link elements for this playlist.
-     * 
+     *
      * This method returns a list of link elements, which contain non-XSPF web
      * resources, which still relate to this playlist.
      *
@@ -615,10 +646,10 @@ class File_XSPF
     {
         return $this->_links;
     }
-    
+
     /**
      * Get the source URL for this playlist.
-     * 
+     *
      * This methods returns the URL where this playlist may be found, such as
      * the path to an FTP or HTTP server, or perhaps the path to a file on
      * the users local machine.
@@ -630,10 +661,10 @@ class File_XSPF
     {
         return $this->_location;
     }
-    
+
     /**
      * Get an array of non-XSPF metadata.
-     * 
+     *
      * This method returns an array of meta elements associated with this
      * playlist.  Meta elements contain metadata not covered by the XSPF
      * specification without breaking XSPF validation.
@@ -646,10 +677,10 @@ class File_XSPF
     {
         return $this->_meta;
     }
-    
+
     /**
      * Get the human-readable title of this playlist.
-     * 
+     *
      * This method returns the human-readable title of this playlist, which may
      * be a simple reference to what the playlist contains, e.g. "Favourites".
      *
@@ -660,10 +691,10 @@ class File_XSPF
     {
         return $this->_title;
     }
-    
+
     /**
      * Get an array of tracks for this playlist.
-     * 
+     *
      * This method returns an array of {@link File_XSPF_Track File_XSPF_Track}
      * objects belonging to this playlist, which directly represent individual
      * tracks on this playlist.
@@ -679,7 +710,7 @@ class File_XSPF
 
     /**
      * Set an annotation for this playlist.
-     * 
+     *
      * This method sets an annotation, or human-readable description of this
      * playlist, e.g. "All the Radiohead tracks in my vast collection."
      *
@@ -696,10 +727,10 @@ class File_XSPF
             return false;
         }
     }
-    
+
     /**
      * Set the creator of this playlist.
-     * 
+     *
      * The method sets the creator element of this playlist, which is the
      * human-readable name of the author of the resource, such as a person's
      * name, or a company, or a group.
@@ -711,10 +742,10 @@ class File_XSPF
     {
         $this->_creator = $creator;
     }
-    
+
     /**
      * Set the creation date of this playlist.
-     * 
+     *
      * This method sets the creation date (not last-modified date) of this
      * playlist.  If the $date parameter contains only digits, this method will
      * assume it is a timestamp, and format it accordingly.
@@ -734,10 +765,10 @@ class File_XSPF
             $this->_date = $date;
         }
     }
-    
+
     /**
      * Set the identifier for this playlist.
-     * 
+     *
      * This method sets an identifier for this playlist, such as a SHA1 hash
      * of the track listing.  The $identifier must be a valid URN.
      *
@@ -753,10 +784,10 @@ class File_XSPF
             return false;
         }
     }
-        
+
     /**
      * Set the image URL for this playlist.
-     * 
+     *
      * This method sets the image URL for this playlist, which provides a
      * fallback image if individual tracks do not themselves have image URLs
      * set.
@@ -776,7 +807,7 @@ class File_XSPF
 
     /**
      * Set the URL of web page for this playlist.
-     * 
+     *
      * This method sets the URL of a web page containing information about this
      * playlist, and possibly links to other playlists by the same author.
      *
@@ -790,19 +821,19 @@ class File_XSPF
             return true;
         } else {
             return false;
-        }   
+        }
     }
-    
+
     /**
      * Set the license for this playlist.
-     * 
+     *
      * This method sets the URL of the license under which this playlist
      * was released.  If the license requires attribution, such as some
      * Creative Commons licenses, such attributions can be added using
      * the {@link File_XSPF::addAttribution() addAttribution} method.
      *
      * @access  public
-     * @see     File_XSPF::addAttribution()    
+     * @see     File_XSPF::addAttribution()
      * @param   string $license The URL of the license for this playlist.
      */
     function setLicense($license)
@@ -812,14 +843,14 @@ class File_XSPF
             return true;
         } else {
             return false;
-        }   
+        }
     }
-    
+
     /**
      * Set the source URL of this playlist.
-     * 
+     *
      * This method sets the source URL of this playlist.  For example, if
-     * one offered one's playlists for syndication over the Internet, one 
+     * one offered one's playlists for syndication over the Internet, one
      * might add a URL to direct users to the original, such as
      * http://www.example.org/list.xspf.
      *
@@ -833,12 +864,12 @@ class File_XSPF
             return true;
         } else {
             return false;
-        }   
+        }
     }
-    
+
     /**
      * Set the title of this playlist.
-     * 
+     *
      * This method sets the human-readable title of this playlist.  For example
      * one might call a playlist 'Favourites', or the name of a band.
      *
@@ -849,10 +880,10 @@ class File_XSPF
     {
         $this->_title = $title;
     }
-    
+
     /**
      * Validate a URI.
-     * 
+     *
      * This method validates a URI against the allowed schemes for this class.
      *
      * @access  private
@@ -863,10 +894,10 @@ class File_XSPF
     {
         return (File_XSPF::_validateUrl($uri, array('strict' => 'false')) && File_XSPF::_validateUrn($uri));
     }
-    
+
     /**
      * Validate a URL
-     * 
+     *
      * This method validates a URL, such as http://www.example.org/.
      *
      * @access  private
@@ -877,10 +908,10 @@ class File_XSPF
     {
         return (Validate::uri($url, array('strict' => ';/?:@$,')));
     }
-    
+
     /**
      * Validate a URN.
-     * 
+     *
      * This method validates a URN, such as md5://8b1a9953c4611296a827abf8c47804d7
      *
      * @access  private
@@ -892,11 +923,11 @@ class File_XSPF
         //return true;
         return (Validate::uri($urn, array('strict' => false)));
     }
-    
+
     /**
      * Save this playlist to a file.
-     * 
-     * This method outputs this playlist to a file, or any other location that 
+     *
+     * This method outputs this playlist to a file, or any other location that
      * can be written to by fopen and fwrite.  If the file write is successful,
      * this function will return true, otherwise it will return an instance of a
      * PEAR_Error object.
@@ -920,10 +951,10 @@ class File_XSPF
         }
         return TRUE;
     }
-    
+
     /**
      * Save this playlist as an M3U playlist.
-     * 
+     *
      * This method saves the current XSPF playlist in M3U format, providing a one-way
      * conversion to the popular flat file playlist.  Reverse conversion is considered
      * to be beyond the scope of this package.
@@ -952,10 +983,10 @@ class File_XSPF
         }
         return TRUE;
     }
-    
+
     /**
      * Save this playlist as SMIL format.
-     * 
+     *
      * This method saves this XSPF playlist as a SMIL file, which can be used as a playlist.
      * This is a one-way conversion, as reading SMIL files is considered beyond the scope
      * of this application.
@@ -979,7 +1010,7 @@ class File_XSPF
                     $seq->addChild('audio', '', array('title' => $track->getAnnotation(), 'url' => $location));
                 } else {
                     $seq->addChild('audio', '', array('url' => $location));
-                }   
+                }
             }
         }
 
@@ -995,10 +1026,10 @@ class File_XSPF
         }
         return TRUE;
     }
-    
+
     /**
      * Output this playlist as a stream.
-     * 
+     *
      * This method outputs this playlist as a HTTP stream with a content type
      * of 'application/xspf+xml', which could be passed off by a user agent to a
      * XSPF-aware application.
@@ -1010,10 +1041,10 @@ class File_XSPF
         header("Content-type: application/xspf+xml");
         print $this->toString();
     }
-    
+
     /**
      * Output this playlist as a string.
-     * 
+     *
      * This method outputs this playlist as a string using the XML_Tree package.
      *
      * @access  public
@@ -1041,7 +1072,7 @@ class File_XSPF
         if (count($this->_extensions)) {
             foreach ($this->_extensions as $extension) {
                 $extension->_toXml($root);
-            }   
+            }
         }
         if ($this->_identifier) {
             $root->addChild('identifier', $this->getIdentifier());
@@ -1058,7 +1089,7 @@ class File_XSPF
         if (count($this->_links)) {
             foreach ($this->_links as $link) {
                 $link->_toXml($root);
-            }   
+            }
         }
         if ($this->_location) {
             $root->addChild('location', $this->getLocation());
@@ -1070,7 +1101,7 @@ class File_XSPF
             $tracklist =& $root->addChild('trackList');
             foreach ($this->_tracks as $track) {
                 $track->_toXml($tracklist);
-            }   
+            }
         }
         return $tree->get();
     }
