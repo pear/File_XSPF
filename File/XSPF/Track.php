@@ -21,7 +21,7 @@
 
 /**
  * PHP version 4
- * 
+ *
  * @author      David Grant <david@grant.org.uk>
  * @copyright   Copyright (c) 2005 David Grant
  * @license     http://www.gnu.org/copyleft/lesser.html GNU LGPL
@@ -32,7 +32,7 @@
 
 /**
  * This class is the objectification of an XSPF Track element.
- * 
+ *
  * @package     File_XSPF
  */
 class File_XSPF_Track
@@ -184,10 +184,10 @@ class File_XSPF_Track
      * @var     int
      */
     var $_trackNum;
-    
+
     /**
      * Add an extension element to this track.
-     * 
+     *
      * This method adds an extension element to this track.  This function will
      * only accept instances of the File_XSPF_Extension class, which is documented
      * elsewhere.
@@ -201,10 +201,10 @@ class File_XSPF_Track
             $this->_extensions[] = $extension;
         }
     }
-    
+
     /**
      * Add a link element to this track.
-     * 
+     *
      * This method adds a link element to this track.  The $link parameter must be a
      * instance of the File_XSPF_Link class or the method will fail.
      *
@@ -217,17 +217,17 @@ class File_XSPF_Track
             $this->_links[] = $link;
         }
     }
-    
+
     /**
      * Add a location element to this track.
-     * 
+     *
      * This method adds the data of a location element to this track.  This is
      * the URL of this track, so probably an audio resource.  Local files to be
      * added should be prepended with a file:// scheme.
      *
      * @access  public
      * @param   File_XSPF_Location $location the URL of a resource for rendering.
-     * @param   boolean   $append true to append the location, or false to prepend it. 
+     * @param   boolean   $append true to append the location, or false to prepend it.
      */
     function addLocation($location, $append = true)
     {
@@ -242,10 +242,10 @@ class File_XSPF_Track
             return false;
         }
     }
-    
+
     /**
      * Add a meta element to this track.
-     * 
+     *
      * This method adds a meta element to this track.  The $meta parameter must be an
      * instance of the File_XSPF_Meta class or the method will fail.
      *
@@ -258,10 +258,10 @@ class File_XSPF_Track
             $this->_meta[] = $meta;
         }
     }
-    
+
     /**
      * Get the name of the album for this track.
-     * 
+     *
      * This method returns the name of the collection from which this track
      * comes from.  For example, 'OK Computer'.
      *
@@ -272,10 +272,10 @@ class File_XSPF_Track
     {
         return $this->_album;
     }
-    
+
     /**
      * Get the human-readable description of this track.
-     * 
+     *
      * This method returns the human-readable description of this track, which
      * might be notes accompanying this track.
      *
@@ -286,12 +286,12 @@ class File_XSPF_Track
     {
         return $this->_annotation;
     }
-    
+
     /**
      * Get an array of locations for this track.
-     * 
+     *
      * This method returns an array of URLs for the rendering of this track.
-     * These URLs will most likely be audio tracks for indepretation by a 
+     * These URLs will most likely be audio tracks for indepretation by a
      * media player.
      *
      * @access  public
@@ -301,10 +301,10 @@ class File_XSPF_Track
     {
         return $this->_locations;
     }
-    
+
     /**
      * Get the canonical ID for this track.
-     * 
+     *
      * This method returns the URN used to correctly identify a resource, which
      * might be a hash, a MusicBrainz identifier, or an ISRC.
      *
@@ -315,10 +315,10 @@ class File_XSPF_Track
     {
         return $this->_identifier;
     }
-    
+
     /**
      * Get the title of this track.
-     * 
+     *
      * This method returns the title of this track, which is the human-readable
      * name of the recording, such as 'Planet Telex'.
      *
@@ -329,10 +329,10 @@ class File_XSPF_Track
     {
         return $this->_title;
     }
-    
+
     /**
      * Set the identifier object for this track.
-     * 
+     *
      * This method sets the identifier for this track, which must be an instance
      * of the File_XSPF_Identifier class.
      *
@@ -343,10 +343,10 @@ class File_XSPF_Track
     {
         $this->_identifier = $identifier;
     }
-    
+
     /**
      * Set the human-readable title of this track.
-     * 
+     *
      * This method sets the human-readable title of this track, which is the
      * name by which it is most-often referred to, such as 'Planet Telex'.
      *
@@ -357,13 +357,13 @@ class File_XSPF_Track
     {
         $this->_title = $title;
     }
-    
+
     /**
      * Get the human-readable name of the track author.
-     * 
+     *
      * This method returns the human-readable name of the entity responsible
      * for this track, which is most commonly the artist, but might be a
-     * conductor or arranger. 
+     * conductor or arranger.
      *
      * @access  public
      * @return  string  the human-readable name of the entity responsible for this track.
@@ -372,10 +372,10 @@ class File_XSPF_Track
     {
         return $this->_creator;
     }
-    
+
     /**
      * Set the human-readable name of the track author.
-     * 
+     *
      * This method sets the human-readable name of the track author, which might be
      * the original artist, composer, or arranger.  For example, 'Radiohead'.
      *
@@ -386,10 +386,10 @@ class File_XSPF_Track
     {
         $this->_creator = $creator;
     }
-    
+
     /**
      * Set a human-readable comment on this track.
-     * 
+     *
      * This method sets a human-readable description of this track, which may contain
      * listening notes, or a review of the track.
      *
@@ -406,10 +406,10 @@ class File_XSPF_Track
             return false;
         }
     }
-    
+
     /**
      * Get the URL of a place where this track may be bought.
-     * 
+     *
      * This method returns the URL of a place, such as an online shop, where this
      * track may be bought, or somewhere where more information about the track
      * can be found, such as a musical encyclopaedia.
@@ -421,10 +421,10 @@ class File_XSPF_Track
     {
         return $this->_info;
     }
-    
+
     /**
      * Set the URL of where to buy this track.
-     * 
+     *
      * This method sets the URL of a place where this track may be bought, or somewhere
      * where more information about the track can be found.  An example might be a page
      * on Amazon.com, or iTunes.
@@ -442,10 +442,10 @@ class File_XSPF_Track
         }
     }
 
-    
+
     /**
      * Get an array of File_XSPF_Meta instances.
-     * 
+     *
      * This method returns an array of File_XSPF_Meta instances used to define
      * metadata resources for this track.
      *
@@ -456,10 +456,10 @@ class File_XSPF_Track
     {
         return $this->_meta;
     }
-    
+
     /**
      * Get an array of File_XSPF_Link instances.
-     * 
+     *
      * This method returns an array of File_XSPF_Link instances used to define
      * non-XSPF data relevant to this track.
      *
@@ -470,10 +470,10 @@ class File_XSPF_Track
     {
         return $this->_links;
     }
-    
+
     /**
      * Get the image to display for this track.
-     * 
+     *
      * This method returns the URL of the image resource to be displayed for the
      * duration of this track.  If this image does not exist, clients should
      * fall back to the image specified for the playlist.
@@ -485,10 +485,10 @@ class File_XSPF_Track
     {
         return $this->_image;
     }
-    
+
     /**
      * Set the URL of the image to display for the duration of this track.
-     * 
+     *
      * This method sets the URL of the image that a content aggregator should
      * display for the duration of this track being played.  If this is not set,
      * clients should fall back to the image specified for this playlist.
@@ -505,10 +505,10 @@ class File_XSPF_Track
             return false;
         }
     }
-    
+
     /**
      * Set the name of the album that contains this track.
-     * 
+     *
      * This method sets the name of an album that contains this track, if indeed
      * this track came from a collection.
      *
@@ -519,10 +519,10 @@ class File_XSPF_Track
     {
         $this->_album = $album;
     }
-    
+
     /**
      * Get the track number of this track.
-     * 
+     *
      * This method returns the number representing the offset of this track
      * within a collection of tracks, such as an album.
      *
@@ -533,10 +533,10 @@ class File_XSPF_Track
     {
         return $this->_trackNum;
     }
-    
+
     /**
      * Set the number of this track.
-     * 
+     *
      * This method sets the track number for this track.  If this track is part
      * of a larger collection, such as an album, this will be the offset at
      * which the track appears on the collection.
@@ -554,10 +554,10 @@ class File_XSPF_Track
             return false;
         }
     }
-    
+
     /**
      * Get the duration of this track in milliseconds.
-     * 
+     *
      * This method returns the duration of this track in milliseconds, and not
      * seconds, as might be expected.
      *
@@ -568,10 +568,10 @@ class File_XSPF_Track
     {
         return $this->_duration;
     }
-    
+
     /**
      * Set the duration of this track.
-     * 
+     *
      * This method sets the duration of this track in milliseconds, and not seconds.
      * This method will use the {@link http://php.net/intval intval} method to cast
      * the supplied duration to an integer.
@@ -589,10 +589,10 @@ class File_XSPF_Track
             return false;
         }
     }
-    
+
     /**
      * Append this object to the parent xml node.
-     * 
+     *
      * This method adds this object to the passed XML parent node, which is an
      * instance of XML_Tree_Node.
      *
@@ -604,6 +604,9 @@ class File_XSPF_Track
         $track =& $parent->addChild('track');
         if ($this->_album) {
             $track->addChild('album', $this->getAlbum());
+        }
+        if ($this->_annotation) {
+             $track->addChild('annotation', $this->getAnnotation());
         }
         if ($this->_creator) {
             $track->addChild('creator', $this->getCreator());
