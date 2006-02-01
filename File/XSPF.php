@@ -338,7 +338,7 @@ class File_XSPF
     }
 
     /**
-     * Parses an existing XSPF file.
+     * Parses an XSPF text stream.
      *
      * This method parses an XSPF text stream into the current File_XSPF instance.  If
      * successful, this function returns true, otherwise it will return an instance of
