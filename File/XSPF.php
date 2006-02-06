@@ -352,7 +352,7 @@ class File_XSPF
         $parser =& new XML_Parser();
         $handle =& new File_XSPF_Handler($this);
 
-        $result = $parser->setInput($text);
+        $result = $parser->setInputString($text);
         if (PEAR::isError($result)) {
             return PEAR::raiseError($result->getMessage(), $result->getCode());
         }
