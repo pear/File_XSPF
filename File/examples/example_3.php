@@ -1,13 +1,54 @@
 <?php
-require_once('File/XSPF.php');
-require_once('File/Ogg.php');
-require_once('MP3/Id.php');
+/**
+ * +---------------------------------------------------------------------------+
+ * | File_XSPF PEAR Package for Manipulating XSPF Playlists                    |
+ * | Copyright (c) 2005 David Grant <david@grant.org.uk>                       |
+ * +---------------------------------------------------------------------------+
+ * | This library is free software; you can redistribute it and/or             |
+ * | modify it under the terms of the GNU Lesser General Public                |
+ * | License as published by the Free Software Foundation; either              |
+ * | version 2.1 of the License, or (at your option) any later version.        |
+ * |                                                                           |
+ * | This library is distributed in the hope that it will be useful,           |
+ * | but WITHOUT ANY WARRANTY; without even the implied warranty of            |
+ * | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU         |
+ * | Lesser General Public License for more details.                           |
+ * |                                                                           |
+ * | You should have received a copy of the GNU Lesser General Public          |
+ * | License along with this library; if not, write to the Free Software       |
+ * | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA |
+ * +---------------------------------------------------------------------------+
+ *
+ * PHP version 4
+ *
+ * @category  File
+ * @package   File_XSPF
+ * @author    David Grant <david@grant.org.uk>
+ * @copyright 2005 David Grant
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU LGPL
+ * @version   CVS: $Id$
+ * @link      http://www.xspf.org/
+ */
+require_once 'File/XSPF.php';
+require_once 'File/Ogg.php';
+require_once 'MP3/Id.php';
 
-function recurseLibrary($path, &$xspf) {
+/**
+ * Recurse over a library.
+ *
+ * @param string    $path  File path
+ * @param File_XSPF &$xspf File_XSPF instance to populate
+ *
+ * @return void
+ */
+function recurseLibrary($path, &$xspf)
+{
     // Open the directory for reading.
     $dp = opendir($path);
-    if (! is_resource($dp))
+    if (! is_resource($dp)) {
         return;
+    }
+
     // Recurse the directory.
     while ($file = readdir($dp)) {
         // Set the absolute path of this file.
@@ -18,23 +59,31 @@ function recurseLibrary($path, &$xspf) {
         } else {
             // Check the basic file information.
             $pathinfo = pathinfo($realpath);
-            if (! isset($pathinfo['extension']) || ! in_array($pathinfo['extension'], array('ogg', 'mp3')))
+            if (!isset($pathinfo['extension'])) {
                 continue;
+            }
+
+            if (!in_array($pathinfo['extension'], array('ogg', 'mp3'))) {
+                continue;
+            }
+
                 
             if ($pathinfo['extension'] == 'ogg') {
                 // Instantiate a new File_Ogg instance.
                 $ogg =& new File_Ogg($realpath);
     
                 // Check for a vorbis logical stream.
-                if (! $ogg->hasStream(OGG_STREAM_VORBIS))
+                if (! $ogg->hasStream(OGG_STREAM_VORBIS)) {
                     continue;
+                }
     
                 // Extract the streams from the audio file.
                 $streams = $ogg->listStreams(OGG_STREAM_VORBIS);
                 $serial  = current($streams);
                 $vorbis  = $ogg->getStream($serial);
-                if (! is_object($vorbis))
+                if (! is_object($vorbis)) {
                     continue;
+                }
     
                 // Extract the information from the audio stream.
                 $album  = $vorbis->getAlbum();
