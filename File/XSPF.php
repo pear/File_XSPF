@@ -1,39 +1,34 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4: */
-// +---------------------------------------------------------------------------+
-// | File_XSPF PEAR Package for Manipulating XSPF Playlists                    |
-// | Copyright (c) 2005 David Grant <david@grant.org.uk>                       |
-// +---------------------------------------------------------------------------+
-// | This library is free software; you can redistribute it and/or             |
-// | modify it under the terms of the GNU Lesser General Public                |
-// | License as published by the Free Software Foundation; either              |
-// | version 2.1 of the License, or (at your option) any later version.        |
-// |                                                                           |
-// | This library is distributed in the hope that it will be useful,           |
-// | but WITHOUT ANY WARRANTY; without even the implied warranty of            |
-// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU         |
-// | Lesser General Public License for more details.                           |
-// |                                                                           |
-// | You should have received a copy of the GNU Lesser General Public          |
-// | License along with this library; if not, write to the Free Software       |
-// | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA |
-// +---------------------------------------------------------------------------+
-
 /**
+ * +---------------------------------------------------------------------------+
+ * | File_XSPF PEAR Package for Manipulating XSPF Playlists                    |
+ * | Copyright (c) 2005 David Grant <david@grant.org.uk>                       |
+ * +---------------------------------------------------------------------------+
+ * | This library is free software; you can redistribute it and/or             |
+ * | modify it under the terms of the GNU Lesser General Public                |
+ * | License as published by the Free Software Foundation; either              |
+ * | version 2.1 of the License, or (at your option) any later version.        |
+ * |                                                                           |
+ * | This library is distributed in the hope that it will be useful,           |
+ * | but WITHOUT ANY WARRANTY; without even the implied warranty of            |
+ * | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU         |
+ * | Lesser General Public License for more details.                           |
+ * |                                                                           |
+ * | You should have received a copy of the GNU Lesser General Public          |
+ * | License along with this library; if not, write to the Free Software       |
+ * | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA |
+ * +---------------------------------------------------------------------------+
+ *
  * PHP version 4
  *
- * @author      David Grant <david@grant.org.uk>
- * @copyright   Copyright (c) 2005 David Grant
- * @license     http://www.gnu.org/copyleft/lesser.html GNU LGPL
- * @link        http://www.xspf.org/
- * @package     File_XSPF
- * @version     CVS: $Id$
+ * @category  File
+ * @package   File_XSPF
+ * @author    David Grant <david@grant.org.uk>
+ * @copyright 2005 David Grant
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU LGPL
+ * @version   CVS: $Id$
+ * @link      http://www.xspf.org/
  */
-
-/**
- *
- */
-//require_once 'PEAR.php';
 
 require_once 'File/XSPF/Extension.php';
 require_once 'File/XSPF/Handler.php';
@@ -57,7 +52,7 @@ require_once 'XML/Tree.php';
  *
  * @link    File_XSPF::addAttribution()
  */
-define("FILE_XSPF_ATTRIBUTION_LOCATION",   1);
+define("FILE_XSPF_ATTRIBUTION_LOCATION", 1);
 /**
  * Constant to identify an attribution as an identifier element.
  *
@@ -72,15 +67,15 @@ define('FILE_XSPF_ATTRIBUTION_IDENTIFIER', 2);
 /**
  * This constant signifies an error closing a file.
  */
-define('FILE_XSPF_ERROR_FILE_CLOSURE',    1);
+define('FILE_XSPF_ERROR_FILE_CLOSURE', 1);
 /**
  * This constant signifies an error opening a file.
  */
-define('FILE_XSPF_ERROR_FILE_OPENING',    2);
+define('FILE_XSPF_ERROR_FILE_OPENING', 2);
 /**
  * This constant signfies an error writing to a file.
  */
-define('FILE_XSPF_ERROR_FILE_WRITING',    3);
+define('FILE_XSPF_ERROR_FILE_WRITING', 3);
 /**
  * This constant signifies an error parsing the XSPF file.
  */
@@ -93,11 +88,15 @@ define('FILE_XSPF_ERROR_PARSING_FAILURE', 4);
  * package, and provides the majority of manipulative methods for outputting
  * the XSPF playlist.
  *
- * @example     examples/example_1.php  Generating a One Track Playlist
- * @example     examples/example_2.php  Filtering an Existing Playlist
- * @example     examples/example_3.php  Cataloging a Music Collection
- * @example     examples/example_4.php  Retrieving Statistics from Audioscrobbler
- * @package     File_XSPF
+ * @example  examples/example_1.php  Generating a One Track Playlist
+ * @example  examples/example_2.php  Filtering an Existing Playlist
+ * @example  examples/example_3.php  Cataloging a Music Collection
+ * @example  examples/example_4.php  Retrieving Statistics from Audioscrobbler
+ * @category File
+ * @package  File_XSPF
+ * @author   David Grant <david@grant.org.uk>
+ * @license  LGPL <http://www.gnu.org/licenses/lgpl.html>
+ * @link     http://pear.php.net/package/File_XSPF
  */
 class File_XSPF
 {
@@ -310,15 +309,17 @@ class File_XSPF
     /**
      * Parses an existing XSPF file.
      *
-     * This method parses an existing XSPF file into the current File_XSPF instance.  If
-     * successful, this function returns true, otherwise it will return an instance of
-     * PEAR_Error.
+     * This method parses an existing XSPF file into the current File_XSPF instance.
+     * If successful, this function returns true, otherwise it will return an
+     * instance of PEAR_Error.
+     *
+     * @param string $path Path to file
      *
      * @access  public
-     * @param   string $path
-     * @return  mixed
+     * @return  bool|PEAR_Error
      */
-    function parseFile($path) {
+    function parseFile($path)
+    {
         $parser =& new XML_Parser();
         $handle =& new File_XSPF_Handler($this);
 
@@ -332,7 +333,9 @@ class File_XSPF
             return PEAR::raiseError($result->getMessage(), $result->getCode());
         }
         if (PEAR::isError($this->_parse_error)) {
-            return PEAR::raiseError($this->_parse_error->getMessage(), $this->_parse_error->getCode());
+            $message = $this->_parse_error->getMessage();
+            $code    = $this->_parse_error->getCode();
+            return PEAR::raiseError($message, $code);
         }
         return true;
     }
@@ -340,15 +343,17 @@ class File_XSPF
     /**
      * Parses an XSPF text stream.
      *
-     * This method parses an XSPF text stream into the current File_XSPF instance.  If
-     * successful, this function returns true, otherwise it will return an instance of
-     * PEAR_Error.
+     * This method parses an XSPF text stream into the current File_XSPF instance.
+     * If successful, this function returns true, otherwise it will return an
+     * instance of PEAR_Error.
+     *
+     * @param string $text Text stream
      *
      * @access  public
-     * @param   string $text
      * @return  mixed
      */
-    function parse($text) {
+    function parse($text)
+    {
         $parser =& new XML_Parser();
         $handle =& new File_XSPF_Handler($this);
 
@@ -362,7 +367,9 @@ class File_XSPF
             return PEAR::raiseError($result->getMessage(), $result->getCode());
         }
         if (PEAR::isError($this->_parse_error)) {
-            return PEAR::raiseError($this->_parse_error->getMessage(), $this->_parse_error->getCode());
+            $message = $this->_parse_error->getMessage();
+            $code    = $this->_parse_error->getCode();
+            return PEAR::raiseError($message, $code);
         }
         return true;
     }
@@ -380,13 +387,14 @@ class File_XSPF
      * children of the attribution element should be in chronological order, so
      * this parameter is included to make the job somewhat more simplistic.
      *
+     * @param object  $attribution File_XSPF_Identifier|File_XSPF_Location
+     * @param boolean $append      true to append, or false to prepend.
+     *
      * @access  public
-     * @param   object  $attribution    an instance of File_XSPF_Identifier or File_XSPF_Location.
-     * @param   int     $type           the type of attribution element.
-     * @param   boolean $append         true to append, or false to prepend.
      * @see     File_XSPF::getLicense()
+     * @return  void
      */
-    function addAttribution($attribution, $append = TRUE)
+    function addAttribution($attribution, $append = true)
     {
         if ($append) {
             array_push($this->_attributions, $attribution);
@@ -402,8 +410,10 @@ class File_XSPF
      * will only accept instances of the File_XSPF_Extension class, which is
      * documented elsewhere.
      *
+     * @param File_XSPF_Extension $extension an instance of File_XSPF_Extension
+     *
      * @access  public
-     * @param   File_XSPF_Extension $extension an instance of File_XSPF_Extension
+     * @return  void
      */
     function addExtension($extension)
     {
@@ -419,8 +429,10 @@ class File_XSPF
      * must be a instance of the {@link File_XSPF_Link File_XSPF_Link} class or
      * the method will fail.
      *
+     * @param File_XSPF_Link $link an instance of File_XSPF_Link
+     *
      * @access  public
-     * @param   File_XSPF_Link $link    an instance of File_XSPF_Link
+     * @return  void
      */
     function addLink($link)
     {
@@ -436,8 +448,10 @@ class File_XSPF
      * must be an instance of the {@link File_XSPF_Meta File_XSPF_Meta} class or
      * the method will fail.
      *
+     * @param File_XSPF_Meta $meta an instance of File_XSPF_Meta.
+     *
      * @access  public
-     * @param   File_XSPF_Meta $meta    an instance of File_XSPF_Meta.
+     * @return  void
      */
     function addMeta($meta)
     {
@@ -454,8 +468,10 @@ class File_XSPF
      * class, and should be the focus of the majority of attention for users
      * building a XSPF playlist.
      *
+     * @param File_XSPF_Track $track an instance of File_XSPF_Track.
+     *
      * @access  public
-     * @param   File_XSPF_Track $track  an instance of File_XSPF_Track.
+     * @return  void
      */
     function addTrack($track)
     {
@@ -483,9 +499,11 @@ class File_XSPF
      *
      * This method returns an array of attribution elements.
      *
+     * @param int $offset the offset of the attribution to retrieve.
+     *
      * @access  public
-     * @param   int $offset the offset of the attribution to retrieve.
-     * @return  File_XSPF_Identifier|File_XSPF_Location an instance of either File_XSPF_Identifier or File_XSPF_Location
+     * @return  File_XSPF_Identifier|File_XSPF_Location
+     *
      * @see     File_XSPF::getLicense()
      */
     function getAttribution($offset = 0)
@@ -498,8 +516,10 @@ class File_XSPF
     /**
      * Get an array of attribution elements.
      *
-     * This method returns a list of attribution elements, which is either an instance
-     * of File_XSPF_Identifier or File_XSPF_Location.
+     * This method returns a list of attribution elements, which is either an
+     * instance of File_XSPF_Identifier or File_XSPF_Location.
+     *
+     * @param unknown $filter Undocumented
      *
      * @access  public
      * @return  array
@@ -508,17 +528,20 @@ class File_XSPF
     {
         if (is_null($filter)) {
             return $this->_attributions;
-        } else {
-            $attributions = array();
-            foreach ($this->_attributions as $attribution) {
-                if ($filter & FILE_XSPF_ATTRIBUTION_IDENTIFIER && is_a($attribution, 'file_xspf_identifier')) {
-                    $attributions[] = $attribution;
-                } elseif ($filter & FILE_XSPF_ATTRIBUTION_LOCATION && is_a($attribution, 'file_xspf_location')) {
-                    $attributions[] = $attribution;
-                }
-            }
-            return $attributions;
         }
+
+        $attributions = array();
+        foreach ($this->_attributions as $attribution) {
+            $is_identifier = $filter & FILE_XSPF_ATTRIBUTION_IDENTIFIER;
+            $is_location   = $filter & FILE_XSPF_ATTRIBUTION_LOCATION;
+
+            if ($is_identifier && is_a($attribution, 'file_xspf_identifier')) {
+                $attributions[] = $attribution;
+            } elseif ($is_location && is_a($attribution, 'file_xspf_location')) {
+                $attributions[] = $attribution;
+            }
+        }
+        return $attributions;
     }
 
     /**
@@ -714,8 +737,9 @@ class File_XSPF
      * This method sets an annotation, or human-readable description of this
      * playlist, e.g. "All the Radiohead tracks in my vast collection."
      *
+     * @param string $annotation a human-readable playlist description.
+     *
      * @access  public
-     * @param   string $annotation a human-readable playlist description.
      * @return  boolean
      */
     function setAnnotation($annotation)
@@ -735,8 +759,10 @@ class File_XSPF
      * human-readable name of the author of the resource, such as a person's
      * name, or a company, or a group.
      *
+     * @param string $creator the name of the creator of this playlist.
+     *
      * @access  public
-     * @param   string $creator the name of the creator of this playlist.
+     * @return void
      */
     function setCreator($creator)
     {
@@ -750,8 +776,10 @@ class File_XSPF
      * playlist.  If the $date parameter contains only digits, this method will
      * assume it is a timestamp, and format it accordingly.
      *
+     * @param mixed $date either an XML schema dateTime or UNIX timestamp.
+     *
      * @access  public
-     * @param   mixed $date either an XML schema dateTime or UNIX timestamp.
+     * @return void
      */
     function setDate($date)
     {
@@ -772,8 +800,10 @@ class File_XSPF
      * This method sets an identifier for this playlist, such as a SHA1 hash
      * of the track listing.  The $identifier must be a valid URN.
      *
+     * @param string $identifier the URN of a resource to identify this playlist.
+     *
      * @access  public
-     * @param   string $identifier the URN of a resource to identify this playlist.
+     * @return  bool
      */
     function setIdentifier($identifier)
     {
@@ -792,8 +822,10 @@ class File_XSPF
      * fallback image if individual tracks do not themselves have image URLs
      * set.
      *
+     * @param string $image the URL to an image resource.
+     *
      * @access  public
-     * @param   string $image  the URL to an image resource.
+     * @return  bool
      */
     function setImage($image)
     {
@@ -811,8 +843,10 @@ class File_XSPF
      * This method sets the URL of a web page containing information about this
      * playlist, and possibly links to other playlists by the same author.
      *
+     * @param string $info the URL of a web page to describe this playlist.
+     *
      * @access  public
-     * @param   string $info the URL of a web page to describe this playlist.
+     * @return  bool
      */
     function setInfo($info)
     {
@@ -832,9 +866,11 @@ class File_XSPF
      * Creative Commons licenses, such attributions can be added using
      * the {@link File_XSPF::addAttribution() addAttribution} method.
      *
+     * @param string $license The URL of the license for this playlist.
+     *
      * @access  public
      * @see     File_XSPF::addAttribution()
-     * @param   string $license The URL of the license for this playlist.
+     * @return  bool
      */
     function setLicense($license)
     {
@@ -854,8 +890,10 @@ class File_XSPF
      * might add a URL to direct users to the original, such as
      * http://www.example.org/list.xspf.
      *
+     * @param string $location the source URL of this playlist.
+     *
      * @access  public
-     * @param   string $location the source URL of this playlist.
+     * @return  bool
      */
     function setLocation($location)
     {
@@ -873,8 +911,10 @@ class File_XSPF
      * This method sets the human-readable title of this playlist.  For example
      * one might call a playlist 'Favourites', or the name of a band.
      *
+     * @param string $title the human-readable title of this playlist.
+     *
      * @access  public
-     * @param   string $title the human-readable title of this playlist.
+     * @return  void
      */
     function setTitle($title)
     {
@@ -886,13 +926,15 @@ class File_XSPF
      *
      * This method validates a URI against the allowed schemes for this class.
      *
+     * @param string $uri a URI to test for validity.
+     *
      * @access  private
-     * @param   string  $uri a URI to test for validity.
      * @return  boolean true if valid, false otherwise.
      */
     function _validateUri($uri)
     {
-        return (File_XSPF::_validateUrl($uri, array('strict' => 'false')) && File_XSPF::_validateUrn($uri));
+        return File_XSPF::_validateUrl($uri, array('strict' => 'false'))
+                    && File_XSPF::_validateUrn($uri);
     }
 
     /**
@@ -900,8 +942,9 @@ class File_XSPF
      *
      * This method validates a URL, such as http://www.example.org/.
      *
+     * @param string $url a URL to test for validity.
+     *
      * @access  private
-     * @param   string $url a URL to test for validity.
      * @return  boolean true if valid, false otherwise.
      */
     function _validateUrl($url)
@@ -914,8 +957,9 @@ class File_XSPF
      *
      * This method validates a URN, such as md5://8b1a9953c4611296a827abf8c47804d7
      *
+     * @param string $urn a URN to test for validity.
+     *
      * @access  private
-     * @param   string $urn a URN to test for validity.
      * @return  boolean true if valid, false otherwise.
      */
     function _validateUrn($urn)
@@ -932,8 +976,9 @@ class File_XSPF
      * this function will return true, otherwise it will return an instance of a
      * PEAR_Error object.
      *
+     * @param string $filename the file to which to write this XSPF playlist.
+     *
      * @access  public
-     * @param   string $filename the file to which to write this XSPF playlist.
      * @return  mixed either true for success, or an instance of PEAR_Error.
      * @throws  PEAR_Error
      */
@@ -941,26 +986,30 @@ class File_XSPF
     {
         $fp = @fopen($filename, "w");
         if (! $fp) {
-            return (PEAR::raiseError("Could Not Open File", FILE_XSPF_ERROR_FILE_OPENING));
+            return PEAR::raiseError("Could Not Open File",
+                                    FILE_XSPF_ERROR_FILE_OPENING);
         }
         if (! fwrite($fp, $this->toString())) {
-            return (PEAR::raiseError("Writing to File Failed", FILE_XSPF_ERROR_FILE_WRITING));
+            return PEAR::raiseError("Writing to File Failed",
+                                    FILE_XSPF_ERROR_FILE_WRITING);
         }
         if (! fclose($fp)) {
-            return (PEAR::raiseError("Failed to Close File", FILE_XSPT_ERROR_FILE_CLOSURE));
+            return PEAR::raiseError("Failed to Close File",
+                                    FILE_XSPT_ERROR_FILE_CLOSURE);
         }
-        return TRUE;
+        return true;
     }
 
     /**
      * Save this playlist as an M3U playlist.
      *
-     * This method saves the current XSPF playlist in M3U format, providing a one-way
-     * conversion to the popular flat file playlist.  Reverse conversion is considered
-     * to be beyond the scope of this package.
+     * This method saves the current XSPF playlist in M3U format, providing
+     * a one-way conversion to the popular flat file playlist.  Reverse conversion
+     * is considered to be beyond the scope of this package.
+     *
+     * @param string $filename the file to which to write the M3U playlist.
      *
      * @access  public
-     * @param   string $filename the file to which to write the M3U playlist.
      * @return  mixed either true for success or an instance of PEAR_Error
      * @throws  PEAR_Error
      */
@@ -968,31 +1017,37 @@ class File_XSPF
     {
         $fp = @fopen($filename, "w");
         if (! $fp) {
-            return (PEAR::raiseError("Could Not Open File", FILE_XSPF_ERROR_FILE_OPENING));
+            return PEAR::raiseError("Could Not Open File",
+                                    FILE_XSPF_ERROR_FILE_OPENING);
         }
         foreach ($this->_tracks as $track) {
             $locations = $track->getLocation();
             foreach ($locations as $location) {
                 if (! fwrite($fp, $location . "\n")) {
-                    return (PEAR::raiseError("Writing to File Failed", FILE_XSPF_ERROR_FILE_WRITING));
+                    return PEAR::raiseError("Writing to File Failed",
+                                            FILE_XSPF_ERROR_FILE_WRITING);
                 }
             }
         }
         if (! fclose($fp)) {
-            return (PEAR::raiseError("Failed to Close File", FILE_XSPT_ERROR_FILE_CLOSURE));
+            return PEAR::raiseError("Failed to Close File",
+                                    FILE_XSPT_ERROR_FILE_CLOSURE);
         }
-        return TRUE;
+        return true;
     }
 
     /**
      * Save this playlist as SMIL format.
      *
-     * This method saves this XSPF playlist as a SMIL file, which can be used as a playlist.
-     * This is a one-way conversion, as reading SMIL files is considered beyond the scope
-     * of this application.
+     * This method saves this XSPF playlist as a SMIL file, which can be used as a
+     * playlist.
+     * This is a one-way conversion, as reading SMIL files is considered beyond the
+     * scope of this application.
+     *
+     * @param string $filename the file to which to write the SMIL playlist.
      *
      * @access  public
-     * @param   string  $filename the file to which to write the SMIL playlist.
+     *
      * @return  mixed   either true if successful, or an instance of PEAR_Error
      * @throws  PEAR_Error
      */
@@ -1007,7 +1062,9 @@ class File_XSPF
             $locations = $track->getLocation();
             foreach ($locations as $location) {
                 if ($tracl->getAnnotation()) {
-                    $seq->addChild('audio', '', array('title' => $track->getAnnotation(), 'url' => $location));
+                    $seq->addChild('audio', '',
+                                            array('title' => $track->getAnnotation(),
+                                                    'url' => $location));
                 } else {
                     $seq->addChild('audio', '', array('url' => $location));
                 }
@@ -1015,16 +1072,19 @@ class File_XSPF
         }
 
         $fp = @fopen($filename, "w");
-        if (! $fp) {
-            return (PEAR::raiseError("Could Not Open File", FILE_XSPF_ERROR_FILE_OPENING));
+        if (!$fp) {
+            return PEAR::raiseError("Could Not Open File",
+                                    FILE_XSPF_ERROR_FILE_OPENING);
         }
-        if (! fwrite($fp, $tree->get())) {
-            return (PEAR::raiseError("Writing to File Failed", FILE_XSPF_ERROR_FILE_WRITING));
+        if (!fwrite($fp, $tree->get())) {
+            return PEAR::raiseError("Writing to File Failed",
+                                    FILE_XSPF_ERROR_FILE_WRITING);
         }
-        if (! fclose($fp)) {
-            return (PEAR::raiseError("Failed to Close File", FILE_XSPT_ERROR_FILE_CLOSURE));
+        if (!fclose($fp)) {
+            return PEAR::raiseError("Failed to Close File",
+                                    FILE_XSPT_ERROR_FILE_CLOSURE);
         }
-        return TRUE;
+        return true;
     }
 
     /**
@@ -1035,6 +1095,7 @@ class File_XSPF
      * XSPF-aware application.
      *
      * @access  public
+     * @return  void
      */
     function toStream()
     {
@@ -1053,7 +1114,9 @@ class File_XSPF
     function toString()
     {
         $tree =& new XML_Tree();
-        $root =& $tree->addRoot('playlist', '', array('version' => $this->_version, 'xmlns' => $this->_xmlns));
+        $root =& $tree->addRoot('playlist', '',
+                                    array('version' => $this->_version,
+                                            'xmlns' => $this->_xmlns));
         if ($this->_annotation) {
             $root->addChild('annotation', $this->getAnnotation());
         }
