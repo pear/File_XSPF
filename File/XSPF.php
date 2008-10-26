@@ -107,20 +107,23 @@ class File_XSPF
      * @var     string
      */
     var $_annotation;
+
     /**
      * A multi-dimensional array of location and identifier elements.
      *
      * @access  private
      * @var     array
      */
-    var $_attributions  = array();
+    var $_attributions = array();
+
     /**
      * Number of annotation elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_annotation  = 0;
+    var $_count_annotation = 0;
+
     /**
      * Number of attribution elements found in file parsing session.
      *
@@ -128,69 +131,79 @@ class File_XSPF
      * @var     int
      */
     var $_count_attribution = 0;
+
     /**
      * Number of creator elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_creator     = 0;
+    var $_count_creator = 0;
+
     /**
      * Number of date elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_date        = 0;
+    var $_count_date = 0;
+
     /**
      * Number of identifier elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_identifier  = 0;
+    var $_count_identifier = 0;
+
     /**
      * Number of image elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_image       = 0;
+    var $_count_image = 0;
+
     /**
      * Number of info elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_info        = 0;
+    var $_count_info = 0;
+
     /**
      * Number of license elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_license     = 0;
+    var $_count_license = 0;
+
     /**
      * Number of location elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_location    = 0;
+    var $_count_location = 0;
+
     /**
      * Number of title elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_title       = 0;
+    var $_count_title = 0;
+
     /**
      * Number of tracklist elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_tracklist   = 0;
+    var $_count_tracklist = 0;
+
     /**
      * Human-readable name of the entity responsible for this playlist.
      *
@@ -198,6 +211,7 @@ class File_XSPF
      * @var     string
      */
     var $_creator;
+
     /**
      * Creation date of this playlist in XML schema dateTime format.
      *
@@ -205,13 +219,15 @@ class File_XSPF
      * @var     string
      */
     var $_date;
+
     /**
      * An array of File_XSPF_Extension instances.
      *
      * @access  private
      * @var     array
      */
-    var $_extensions    = array();
+    var $_extensions = array();
+
     /**
      * Canonical ID for this playlist as a URN.
      *
@@ -219,6 +235,7 @@ class File_XSPF
      * @var     string
      */
     var $_identifier;
+
     /**
      * The URL of an image to display in default of a track image.
      *
@@ -226,6 +243,7 @@ class File_XSPF
      * @var     string
      */
     var $_image;
+
     /**
      * The URL of a web page to find out more about this playlist.
      *
@@ -233,6 +251,7 @@ class File_XSPF
      * @var     string
      */
     var $_info;
+
     /**
      * The URL of the license for this playlist.
      *
@@ -240,13 +259,15 @@ class File_XSPF
      * @var     string
      */
     var $_license;
+
     /**
      * An array of File_XSPF_Link instances.
      *
      * @access  private
      * @var     array
      */
-    var $_links         = array();
+    var $_links = array();
+
     /**
      * The source URL of this playlist.
      *
@@ -254,20 +275,23 @@ class File_XSPF
      * @var     string
      */
     var $_location;
+
     /**
      * An array of File_XSPF_Meta instances.
      *
      * @access  private
      * @var     array
      */
-    var $_meta          = array();
+    var $_meta = array();
+
     /**
      * An array of File_XSPF_Track instances.
      *
      * @access  private
      * @var     array
      */
-    var $_tracks        = array();
+    var $_tracks = array();
+
     /**
      * The human-readable title of this playlist.
      *
@@ -275,26 +299,29 @@ class File_XSPF
      * @var     string
      */
     var $_title;
+
     /**
      * The version of XSPF specification being used.
      *
      * @access  private
      * @var     int
      */
-    var $_version       = 1;
+    var $_version = 1;
+
     /**
      * The namespace definition for this format.
      *
      * @access  private
      * @var     string
      */
-    var $_xmlns         = "http://xspf.org/ns/0/";
+    var $_xmlns = "http://xspf.org/ns/0/";
+
     /**
      * Enter description here...
      *
      * @var     boolean
      */
-    var $_parse_error   = false;
+    var $_parse_error = false;
 
     /**
      * Creates a new File_XSPF object.

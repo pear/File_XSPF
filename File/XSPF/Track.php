@@ -1,39 +1,43 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4: */
-// +----------------------------------------------------------------------------+
-// | File_XSPF PEAR Package for Manipulating XSPF Playlists                     |
-// | Copyright (c) 2005 David Grant <david@grant.org.uk>                        |
-// +----------------------------------------------------------------------------+
-// | This library is free software; you can redistribute it and/or              |
-// | modify it under the terms of the GNU Lesser General Public                 |
-// | License as published by the Free Software Foundation; either               |
-// | version 2.1 of the License, or (at your option) any later version.         |
-// |                                                                            |
-// | This library is distributed in the hope that it will be useful,            |
-// | but WITHOUT ANY WARRANTY; without even the implied warranty of             |
-// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU          |
-// | Lesser General Public License for more details.                            |
-// |                                                                            |
-// | You should have received a copy of the GNU Lesser General Public           |
-// | License along with this library; if not, write to the Free Software        |
-// | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA |
-// +----------------------------------------------------------------------------+
-
 /**
+ * +---------------------------------------------------------------------------+
+ * | File_XSPF PEAR Package for Manipulating XSPF Playlists                    |
+ * | Copyright (c) 2005 David Grant <david@grant.org.uk>                       |
+ * +---------------------------------------------------------------------------+
+ * | This library is free software; you can redistribute it and/or             |
+ * | modify it under the terms of the GNU Lesser General Public                |
+ * | License as published by the Free Software Foundation; either              |
+ * | version 2.1 of the License, or (at your option) any later version.        |
+ * |                                                                           |
+ * | This library is distributed in the hope that it will be useful,           |
+ * | but WITHOUT ANY WARRANTY; without even the implied warranty of            |
+ * | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU         |
+ * | Lesser General Public License for more details.                           |
+ * |                                                                           |
+ * | You should have received a copy of the GNU Lesser General Public          |
+ * | License along with this library; if not, write to the Free Software       |
+ * | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA |
+ * +---------------------------------------------------------------------------+
+ *
  * PHP version 4
  *
- * @author      David Grant <david@grant.org.uk>
- * @copyright   Copyright (c) 2005 David Grant
- * @license     http://www.gnu.org/copyleft/lesser.html GNU LGPL
- * @link        http://www.xspf.org/
- * @package     File_XSPF
- * @version     CVS: $Id$
+ * @category  File
+ * @package   File_XSPF
+ * @author    David Grant <david@grant.org.uk>
+ * @copyright 2005 David Grant
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU LGPL
+ * @version   CVS: $Id$
+ * @link      http://www.xspf.org/
  */
 
 /**
  * This class is the objectification of an XSPF Track element.
  *
- * @package     File_XSPF
+ * @category File
+ * @package  File_XSPF
+ * @author   David Grant <david@grant.org.uk>
+ * @license  LGPL <http://www.gnu.org/licenses/lgpl.html>
+ * @link     http://pear.php.net/package/File_XSPF
  */
 class File_XSPF_Track
 {
@@ -44,6 +48,7 @@ class File_XSPF_Track
      * @var     string
      */
     var $_album;
+
     /**
      * The human-readable comment of this track.
      *
@@ -51,62 +56,71 @@ class File_XSPF_Track
      * @var     string
      */
     var $_annotation;
+
     /**
      * Number of album elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_album       = 0;
+    var $_count_album = 0;
+
     /**
      * Number of annotation elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_annotation  = 0;
+    var $_count_annotation = 0;
+
     /**
      * Number of creator elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_creator     = 0;
+    var $_count_creator = 0;
+
     /**
      * Number of duration elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_duration    = 0;
+    var $_count_duration = 0;
+
     /**
      * Number of image elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_image       = 0;
+    var $_count_image = 0;
+
     /**
      * Number of info elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_info        = 0;
+    var $_count_info = 0;
+
     /**
      * Number of title elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_title       = 0;
+    var $_count_title = 0;
+
     /**
      * Number of tracknum elements found in file parsing session.
      *
      * @access  private
      * @var     int
      */
-    var $_count_tracknum    = 0;
+    var $_count_tracknum = 0;
+
     /**
      * The human-readable name of this track's creator, e.g. 'Radiohead'.
      *
@@ -114,20 +128,23 @@ class File_XSPF_Track
      * @var     string
      */
     var $_creator;
+
     /**
      * The duration of this track in milliseconds.
      *
      * @access  private
      * @var     int
      */
-    var $_duration      = 0;
+    var $_duration = 0;
+
     /**
      * An array of File_XSPF_Extension instances.
      *
      * @access  private
      * @var     array
      */
-    var $_extensions    = array();
+    var $_extensions = array();
+
     /**
      * Canonical URN for this track.
      *
@@ -135,6 +152,7 @@ class File_XSPF_Track
      * @var     string
      */
     var $_identifier;
+
     /**
      * URL of an image to display for the duration of this track.
      *
@@ -142,6 +160,7 @@ class File_XSPF_Track
      * @var     string
      */
     var $_image;
+
     /**
      * URL of a place where this resource can be bought or more info may be found.
      *
@@ -149,27 +168,31 @@ class File_XSPF_Track
      * @var     string
      */
     var $_info;
+
     /**
      * An array of File_XSPF_Link instances.
      *
      * @access  private
      * @var     array
      */
-    var $_links         = array();
+    var $_links = array();
+
     /**
      * A multi-dimensional array of various location elements.
      *
      * @access  private
      * @var     array
      */
-    var $_locations     = array();
+    var $_locations = array();
+
     /**
      * An array of File_XSPF_Meta instances.
      *
      * @access  private
      * @var     array
      */
-    var $_meta          = array();
+    var $_meta = array();
+
     /**
      * The human-readable name of this track, e.g. 'Planet Telex'
      *
@@ -177,6 +200,7 @@ class File_XSPF_Track
      * @var     string
      */
     var $_title;
+
     /**
      * Ordinal position of this track on the collection described in $_album.
      *
@@ -192,8 +216,10 @@ class File_XSPF_Track
      * only accept instances of the File_XSPF_Extension class, which is documented
      * elsewhere.
      *
-     * @access  public
-     * @param   File_XSPF_Extension $extension an instance of File_XSPF_Extension
+     * @param File_XSPF_Extension $extension an instance of File_XSPF_Extension
+     *
+     * @access public
+     * @return void
      */
     function addExtension($extension)
     {
@@ -208,8 +234,10 @@ class File_XSPF_Track
      * This method adds a link element to this track.  The $link parameter must be a
      * instance of the File_XSPF_Link class or the method will fail.
      *
-     * @access  public
-     * @param   File_XSPF_Link $link  an instance of the File_XSPF_Link class.
+     * @param File_XSPF_Link $link an instance of the File_XSPF_Link class.
+     *
+     * @access public
+     * @return void
      */
     function addLink($link)
     {
@@ -225,9 +253,12 @@ class File_XSPF_Track
      * the URL of this track, so probably an audio resource.  Local files to be
      * added should be prepended with a file:// scheme.
      *
-     * @access  public
-     * @param   File_XSPF_Location $location the URL of a resource for rendering.
-     * @param   boolean   $append true to append the location, or false to prepend it.
+     * @param File_XSPF_Location $location the URL of a resource for rendering.
+     * @param boolean            $append   true to append the location, or false
+     *                                     to prepend it.
+     *
+     * @access public
+     * @return bool
      */
     function addLocation($location, $append = true)
     {
@@ -249,8 +280,10 @@ class File_XSPF_Track
      * This method adds a meta element to this track.  The $meta parameter must be an
      * instance of the File_XSPF_Meta class or the method will fail.
      *
-     * @access  public
-     * @param   File_XSPF_Meta $meta an instance of the File_XSPF_Meta class.
+     * @param File_XSPF_Meta $meta an instance of the File_XSPF_Meta class.
+     *
+     * @access public
+     * @return void
      */
     function addMeta($meta)
     {
@@ -336,8 +369,10 @@ class File_XSPF_Track
      * This method sets the identifier for this track, which must be an instance
      * of the File_XSPF_Identifier class.
      *
-     * @access  public
-     * @param   File_XSPF_Identifier $identifier an instance of File_XSPF_Identifier
+     * @param File_XSPF_Identifier $identifier an instance of File_XSPF_Identifier
+     *
+     * @access public
+     * @return void
      */
     function setIdentifier($identifier)
     {
@@ -350,8 +385,10 @@ class File_XSPF_Track
      * This method sets the human-readable title of this track, which is the
      * name by which it is most-often referred to, such as 'Planet Telex'.
      *
-     * @access  public
-     * @param   string  $title the human-readable title of this track.
+     * @param string $title the human-readable title of this track.
+     *
+     * @access public
+     * @return void
      */
     function setTitle($title)
     {
@@ -366,7 +403,8 @@ class File_XSPF_Track
      * conductor or arranger.
      *
      * @access  public
-     * @return  string  the human-readable name of the entity responsible for this track.
+     * @return  string  the human-readable name of the entity responsible 
+     *                  for this track.
      */
     function getCreator()
     {
@@ -379,8 +417,11 @@ class File_XSPF_Track
      * This method sets the human-readable name of the track author, which might be
      * the original artist, composer, or arranger.  For example, 'Radiohead'.
      *
-     * @access  public
-     * @param   string $creator the human-readable name of the entity responsible for this track.
+     * @param string $creator the human-readable name of the entity responsible 
+     *                        for this track.
+     *
+     * @access public
+     * @return void
      */
     function setCreator($creator)
     {
@@ -393,9 +434,10 @@ class File_XSPF_Track
      * This method sets a human-readable description of this track, which may contain
      * listening notes, or a review of the track.
      *
-     * @access  public
-     * @param   string $annotation a human-readable comment on this track.
-     * @return  false
+     * @param string $annotation a human-readable comment on this track.
+     *
+     * @access public
+     * @return boolean
      */
     function setAnnotation($annotation)
     {
@@ -415,7 +457,8 @@ class File_XSPF_Track
      * can be found, such as a musical encyclopaedia.
      *
      * @access  public
-     * @return  string the URL of a place for buying this track, or finding out more about it.
+     * @return  string the URL of a place for buying this track, or 
+     *          finding out more about it.
      */
     function getInfo()
     {
@@ -425,12 +468,14 @@ class File_XSPF_Track
     /**
      * Set the URL of where to buy this track.
      *
-     * This method sets the URL of a place where this track may be bought, or somewhere
-     * where more information about the track can be found.  An example might be a page
-     * on Amazon.com, or iTunes.
+     * This method sets the URL of a place where this track may be bought, or 
+     * somewhere where more information about the track can be found.  
+     * An example might be a page on Amazon.com, or iTunes.
      *
-     * @access  public
-     * @param   string $info  a URL where this track may be bought.
+     * @param string $info a URL where this track may be bought.
+     *
+     * @access public
+     * @return void
      */
     function setInfo($info)
     {
@@ -493,8 +538,10 @@ class File_XSPF_Track
      * display for the duration of this track being played.  If this is not set,
      * clients should fall back to the image specified for this playlist.
      *
-     * @access  public
-     * @param   string $image an image resource URL.
+     * @param string $image an image resource URL.
+     *
+     * @access public
+     * @return bool
      */
     function setImage($image)
     {
@@ -512,8 +559,10 @@ class File_XSPF_Track
      * This method sets the name of an album that contains this track, if indeed
      * this track came from a collection.
      *
-     * @access  public
-     * @param   string $album the collection on which this track appears.
+     * @param string $album the collection on which this track appears.
+     *
+     * @access public
+     * @return void
      */
     function setAlbum($album)
     {
@@ -541,8 +590,9 @@ class File_XSPF_Track
      * of a larger collection, such as an album, this will be the offset at
      * which the track appears on the collection.
      *
+     * @param int $trackNum the ordinal position of the track on its collection.
+     *
      * @access  public
-     * @param   int     $trackNum the ordinal position of the track on its collection.
      * @return  boolean
      */
     function setTrackNumber($trackNum)
@@ -576,8 +626,9 @@ class File_XSPF_Track
      * This method will use the {@link http://php.net/intval intval} method to cast
      * the supplied duration to an integer.
      *
+     * @param int $duration the length of this track in milliseconds.
+     *
      * @access  public
-     * @param   int     $duration the length of this track in milliseconds.
      * @return  boolean
      */
     function setDuration($duration)
@@ -596,8 +647,10 @@ class File_XSPF_Track
      * This method adds this object to the passed XML parent node, which is an
      * instance of XML_Tree_Node.
      *
-     * @access  private
-     * @param   XML_Tree_Node $parent
+     * @param XML_Tree_Node &$parent Parent node
+     *
+     * @access private
+     * @return void
      */
     function _toXml(&$parent)
     {

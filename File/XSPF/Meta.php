@@ -1,39 +1,43 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4: */
-// +----------------------------------------------------------------------------+
-// | File_XSPF PEAR Package for Manipulating XSPF Playlists                     |
-// | Copyright (c) 2005 David Grant <david@grant.org.uk>                        |
-// +----------------------------------------------------------------------------+
-// | This library is free software; you can redistribute it and/or              |
-// | modify it under the terms of the GNU Lesser General Public                 |
-// | License as published by the Free Software Foundation; either               |
-// | version 2.1 of the License, or (at your option) any later version.         |
-// |                                                                            |
-// | This library is distributed in the hope that it will be useful,            |
-// | but WITHOUT ANY WARRANTY; without even the implied warranty of             |
-// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU          |
-// | Lesser General Public License for more details.                            |
-// |                                                                            |
-// | You should have received a copy of the GNU Lesser General Public           |
-// | License along with this library; if not, write to the Free Software        |
-// | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA |
-// +----------------------------------------------------------------------------+
-
 /**
+ * +---------------------------------------------------------------------------+
+ * | File_XSPF PEAR Package for Manipulating XSPF Playlists                    |
+ * | Copyright (c) 2005 David Grant <david@grant.org.uk>                       |
+ * +---------------------------------------------------------------------------+
+ * | This library is free software; you can redistribute it and/or             |
+ * | modify it under the terms of the GNU Lesser General Public                |
+ * | License as published by the Free Software Foundation; either              |
+ * | version 2.1 of the License, or (at your option) any later version.        |
+ * |                                                                           |
+ * | This library is distributed in the hope that it will be useful,           |
+ * | but WITHOUT ANY WARRANTY; without even the implied warranty of            |
+ * | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU         |
+ * | Lesser General Public License for more details.                           |
+ * |                                                                           |
+ * | You should have received a copy of the GNU Lesser General Public          |
+ * | License along with this library; if not, write to the Free Software       |
+ * | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA |
+ * +---------------------------------------------------------------------------+
+ *
  * PHP version 4
- * 
- * @author      David Grant <david@grant.org.uk>
- * @copyright   Copyright (c) 2005 David Grant
- * @license     http://www.gnu.org/copyleft/lesser.html GNU LGPL
- * @link        http://www.xspf.org/
- * @package     File_XSPF
- * @version     CVS: $Id$
+ *
+ * @category  File
+ * @package   File_XSPF
+ * @author    David Grant <david@grant.org.uk>
+ * @copyright 2005 David Grant
+ * @license   http://www.gnu.org/copyleft/lesser.html GNU LGPL
+ * @version   CVS: $Id$
+ * @link      http://www.xspf.org/
  */
 
 /**
  * This class is the objectification of an XSPF Meta element.
- * 
- * @package     File_XSPF
+ *
+ * @category File
+ * @package  File_XSPF
+ * @author   David Grant <david@grant.org.uk>
+ * @license  LGPL <http://www.gnu.org/licenses/lgpl.html>
+ * @link     http://pear.php.net/package/File_XSPF
  */
 class File_XSPF_Meta
 {
@@ -44,6 +48,7 @@ class File_XSPF_Meta
      * @var     string
      */
     var $_content;
+
     /**
      * The URI of a resource defining the metadata.
      *
@@ -86,8 +91,10 @@ class File_XSPF_Meta
      * This method sets the content of this metadata element.  The content
      * should be a plain text value, and should not contain any markup.
      *
-     * @access  public
-     * @param   string $content the plain text metadata value.
+     * @param string $content the plain text metadata value.
+     *
+     * @access public
+     * @return void
      */
     function setContent($content)
     {
@@ -100,8 +107,10 @@ class File_XSPF_Meta
      * This method sets the URI of the resource used to define the purpose of 
      * this metadata element.
      *
-     * @access  public
-     * @param   string $rel the valid URI of a definition resource.
+     * @param string $rel the valid URI of a definition resource.
+     *
+     * @access public
+     * @return void
      */
     function setRelationship($rel)
     {
@@ -119,13 +128,16 @@ class File_XSPF_Meta
      * This method adds this object to the passed XML parent node, which is an
      * instance of XML_Tree_Node.
      *
-     * @access  private
-     * @param   XML_Tree_Node $parent
+     * @param XML_Tree_Node &$parent Parent node
+     *
+     * @access private
+     * @return void
      */
     function _toXml(&$parent)
     {
         if ($this->getRelationship()) {
-            $parent->addChild('meta', $this->getContent(), array('rel' => $this->getRelationship()));
+            $parent->addChild('meta', $this->getContent(),
+                                      array('rel' => $this->getRelationship()));
         } else {
             $parent->addChild('meta', $this->getContent());
         }
