@@ -925,7 +925,7 @@ class File_XSPF
     function setLocation($location)
     {
         if (File_XSPF::_validateURL($location->_url)) {
-            $this->_location = $location;
+            $this->_location = $location->_url;
             return true;
         } else {
             return false;
