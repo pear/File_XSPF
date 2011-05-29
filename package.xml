@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.9.1" version="2.0">
+<package packagerversion="1.9.2" version="2.0">
  <name>File_XSPF</name>
  <channel>pear.php.net</channel>
  <summary>Package for Manipulating XSPF Playlists</summary>
@@ -10,10 +10,10 @@
   <email>david@grant.org.uk</email>
   <active>yes</active>
  </lead>
- <date>2010-10-18</date>
- <time>22:23:25</time>
+ <date>2011-05-29</date>
+ <time>23:44:13</time>
  <version>
-  <release>0.2.2</release>
+  <release>0.2.3</release>
   <api>0.2.1</api>
  </version>
  <stability>
@@ -23,12 +23,12 @@
  <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
  <notes>
 QA release
-Bug #14378 PHPCS
-Bug #14582 package.xml not in cvs
+Rudger Gravestein&apos;s fix for 
+Bug #18370	PHP Catchable fatal error
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
-   <file baseinstalldir="/" md5sum="94b650602620fbe97b7da988e6934f37" name="File/XSPF.php" role="php" />
+   <file baseinstalldir="/" md5sum="f6d0e892aa398d45185245ce9b884775" name="File/XSPF.php" role="php" />
    <file baseinstalldir="/" md5sum="1c87e9251556dc8756228f06d5020713" name="File/examples/example_1.php" role="php" />
    <file baseinstalldir="/" md5sum="eca00dcb455bdde5dff30c7622eb04fe" name="File/examples/example_2.php" role="php" />
    <file baseinstalldir="/" md5sum="97364571847846f784426d600c3ef7c8" name="File/examples/example_3.php" role="php" />
@@ -144,6 +144,23 @@ This is a bug fix release.  This release fixes bug 6696, which highlights a crit
 QA release
 Bug #14378 PHPCS
 Bug #14582 package.xml not in cvs
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.2.3</release>
+    <api>0.2.1</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2011-05-29</date>
+   <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
+   <notes>
+QA release
+Rudger Gravestein&apos;s fix for 
+Bug #18370	PHP Catchable fatal error
    </notes>
   </release>
  </changelog>
