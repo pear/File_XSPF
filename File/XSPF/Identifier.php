@@ -113,7 +113,7 @@ class File_XSPF_Identifier
      * @access  private
      * @return void
      */
-    function _toXML(&$parent)
+    function _toXML($parent)
     {
         $parent->addChild('identifier', $this->getUri());
     }

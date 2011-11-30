@@ -112,7 +112,7 @@ class File_XSPF_Location
      * @access private
      * @return void
      */
-    function _toXml(&$parent)
+    function _toXml($parent)
     {
         $parent->addChild('location', $this->getUrl());
     }

@@ -133,7 +133,7 @@ class File_XSPF_Extension
      * @access  private
      * @return void
      */
-    function _toXml(&$parent)
+    function _toXml($parent)
     {
         if ($this->getApplication()) {
             $options = array('application' => $this->getApplication());
@@ -143,4 +143,3 @@ class File_XSPF_Extension
         }
     }
 }
-?>

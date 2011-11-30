@@ -30,6 +30,7 @@
  * @link      http://www.xspf.org/
  */
 
+require_once 'File/XSPF/Exception.php';
 require_once 'File/XSPF/Extension.php';
 require_once 'File/XSPF/Handler.php';
 require_once 'File/XSPF/Identifier.php';
@@ -351,20 +352,11 @@ class File_XSPF
         $parser = new XML_Parser();
         $handle = new File_XSPF_Handler($this);
 
-        $result = $parser->setInputFile($path);
-        if (PEAR::isError($result)) {
-            return PEAR::raiseError($result->getMessage(), $result->getCode());
-        }
+        $parser->setInputFile($path);
+
         $parser->setHandlerObj($handle);
-        $result = $parser->parse();
-        if (PEAR::isError($result)) {
-            return PEAR::raiseError($result->getMessage(), $result->getCode());
-        }
-        if (PEAR::isError($this->_parse_error)) {
-            $message = $this->_parse_error->getMessage();
-            $code    = $this->_parse_error->getCode();
-            return PEAR::raiseError($message, $code);
-        }
+        $parser->parse();
+
         return true;
     }
 
@@ -386,19 +378,8 @@ class File_XSPF
         $handle = new File_XSPF_Handler($this);
 
         $result = $parser->setInputString($text);
-        if (PEAR::isError($result)) {
-            return PEAR::raiseError($result->getMessage(), $result->getCode());
-        }
         $parser->setHandlerObj($handle);
         $result = $parser->parse();
-        if (PEAR::isError($result)) {
-            return PEAR::raiseError($result->getMessage(), $result->getCode());
-        }
-        if (PEAR::isError($this->_parse_error)) {
-            $message = $this->_parse_error->getMessage();
-            $code    = $this->_parse_error->getCode();
-            return PEAR::raiseError($message, $code);
-        }
         return true;
     }
 
@@ -1014,15 +995,15 @@ class File_XSPF
     {
         $fp = @fopen($filename, "w");
         if (! $fp) {
-            return PEAR::raiseError("Could Not Open File",
+            return throw new File_XSPF_Exception("Could Not Open File",
                                     File_XSPF::ERROR_FILE_OPENING);
         }
         if (! fwrite($fp, $this->toString())) {
-            return PEAR::raiseError("Writing to File Failed",
+            return throw new File_XSPF_Exception("Writing to File Failed",
                                     File_XSPF::ERROR_FILE_WRITING);
         }
         if (! fclose($fp)) {
-            return PEAR::raiseError("Failed to Close File",
+            return throw new File_XSPF_Exception("Failed to Close File",
                                     File_XSPF::ERROR_FILE_CLOSURE);
         }
         return true;
@@ -1045,20 +1026,20 @@ class File_XSPF
     {
         $fp = @fopen($filename, "w");
         if (! $fp) {
-            return PEAR::raiseError("Could Not Open File",
+            return throw new File_XSPF_Exception("Could Not Open File",
                                     File_XSPF::ERROR_FILE_OPENING);
         }
         foreach ($this->_tracks as $track) {
             $locations = $track->getLocation();
             foreach ($locations as $location) {
                 if (! fwrite($fp, $location . "\n")) {
-                    return PEAR::raiseError("Writing to File Failed",
+                    return throw new File_XSPF_Exception("Writing to File Failed",
                                             File_XSPF::ERROR_FILE_WRITING);
                 }
             }
         }
         if (! fclose($fp)) {
-            return PEAR::raiseError("Failed to Close File",
+            return throw new File_XSPF_Exception("Failed to Close File",
                                     File_XSPF::ERROR_FILE_CLOSURE);
         }
         return true;
@@ -1101,15 +1082,15 @@ class File_XSPF
 
         $fp = @fopen($filename, "w");
         if (!$fp) {
-            return PEAR::raiseError("Could Not Open File",
+            return throw new File_XSPF_Exception("Could Not Open File",
                                     File_XSPF::ERROR_FILE_OPENING);
         }
         if (!fwrite($fp, $tree->get())) {
-            return PEAR::raiseError("Writing to File Failed",
+            return throw new File_XSPF_Exception("Writing to File Failed",
                                     File_XSPF::ERROR_FILE_WRITING);
         }
         if (!fclose($fp)) {
-            return PEAR::raiseError("Failed to Close File",
+            return throw new File_XSPF_Exception("Failed to Close File",
                                     File_XSPF::ERROR_FILE_CLOSURE);
         }
         return true;

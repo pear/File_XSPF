@@ -133,7 +133,7 @@ class File_XSPF_Meta
      * @access private
      * @return void
      */
-    function _toXml(&$parent)
+    function _toXml($parent)
     {
         if ($this->getRelationship()) {
             $parent->addChild('meta', $this->getContent(),
