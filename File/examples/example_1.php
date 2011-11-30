@@ -19,7 +19,7 @@
  * | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA |
  * +---------------------------------------------------------------------------+
  *
- * PHP version 4
+ * PHP version 5
  *
  * @category  File
  * @package   File_XSPF
@@ -31,11 +31,11 @@
  */
 require_once 'File/XSPF.php';
 
-$xspf =& new File_XSPF();
+$xspf = new File_XSPF();
 $xspf->setCreator('Joe Bloggs');
 $xspf->setLicense('LGPL');
 
-$track =& new File_XSPF_Track();
+$track = new File_XSPF_Track();
 $track->setAlbum('OK Computer');
 $track->setDuration(324000);
 $track->setTitle('The Tourist');

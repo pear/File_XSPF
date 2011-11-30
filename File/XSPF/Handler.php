@@ -103,7 +103,7 @@ class File_XSPF_Handler
      */
     function File_XSPF_Handler(&$xspf)
     {
-        $this->_xspf =& $xspf;
+        $this->_xspf = $xspf;
     }
 
     /**
@@ -141,22 +141,22 @@ class File_XSPF_Handler
                 // This is the content of the track album.
                 $this->_curr_track->setAlbum($data);
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('ALBUM element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('ALBUM element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "ANNOTATION":
             if ($path == "/PLAYLIST/ANNOTATION") {
                 // This is the content of the playlist annotation.
                 if ($this->_xspf->setAnnotation($data) == false) {
-                    $this->_xspf->_parse_error =& PEAR::raiseError($path . ' MUST NOT contain markup characters.', File_XSPF::ERROR_PARSING_FAILURE);
+                    $this->_xspf->_parse_error = PEAR::raiseError($path . ' MUST NOT contain markup characters.', File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } elseif ($path == "/PLAYLIST/TRACKLIST/TRACK/ANNOTATION") {
                 // This is the content of the track annotation.
                 if ($this->_curr_track->setAnnotation($data) == false) {
-                    $this->_xspf->_parse_error =& PEAR::raiseError($path . ' MUST NOT contain markup characters.', File_XSPF::ERROR_PARSING_FAILURE);
+                    $this->_xspf->_parse_error = PEAR::raiseError($path . ' MUST NOT contain markup characters.', File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('ANNOTATION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('ANNOTATION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "CREATOR":
@@ -167,34 +167,34 @@ class File_XSPF_Handler
                 // This is the content of the track creator.
                 $this->_curr_track->setCreator($data);
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('CREATOR element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('CREATOR element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "DATE":
             if ($path == "/PLAYLIST/DATE") {
                 // This is the content of the playlist date.
                 if (preg_match("/^([0-9]{4})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])([+-](0[0-9]|1[0-2]):[0-5][0-9])/", $data, $matches) == false) {
-                    $this->_xspf->_parse_error =& PEAR::raiseError($path . ' MUST be formatted as a XML Schema dateTime.', File_XSPF::ERROR_PARSING_FAILURE);
+                    $this->_xspf->_parse_error = PEAR::raiseError($path . ' MUST be formatted as a XML Schema dateTime.', File_XSPF::ERROR_PARSING_FAILURE);
                 }
                 $this->_xspf->setDate($data);
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('DATE element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('DATE element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "DURATION":
             if ($path == "/PLAYLIST/TRACKLIST/TRACK/DURATION") {
                 // This is the content of the track duration.
                 if ($this->_curr_track->setDuration($data) === false) {
-                    $this->_xspf->_parse_error =& PEAR::raiseError("$path MUST contain a non-negative integer.", File_XSPF::ERROR_PARSING_FAILURE);
+                    $this->_xspf->_parse_error = PEAR::raiseError("$path MUST contain a non-negative integer.", File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('DURATION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('DURATION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "IDENTIFIER":
             $identifier = new File_XSPF_Identifier();
             if ($identifier->setUri($data) == false) {
-                $this->_xspf->_parse_error =& PEAR::raiseError("$path MUST contain a valid URN.", File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError("$path MUST contain a valid URN.", File_XSPF::ERROR_PARSING_FAILURE);
             }
             if ($path == "/PLAYLIST/IDENTIFIER") {
                 // This is the content of the playlist identifier.
@@ -206,63 +206,63 @@ class File_XSPF_Handler
                 // This is the content of the track identifier.
                 $this->_curr_track->setIdentifier($identifier);
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('IDENTIFIER element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('IDENTIFIER element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "IMAGE":
             if ($path == "/PLAYLIST/IMAGE") {
                 // This is the content of the playlist image.
                 if ($this->_xspf->setImage($data) == false) {
-                    $this->_xspf->_parse_error =& PEAR::raiseError("$path MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
+                    $this->_xspf->_parse_error = PEAR::raiseError("$path MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } elseif ($path == "/PLAYLIST/TRACKLIST/TRACK/IMAGE") {
                 // This is the content of the track image.
                 if ($this->_curr_track->setImage($data) == false) {
-                    $this->_xspf->_parse_error =& PEAR::raiseError("$path MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
+                    $this->_xspf->_parse_error = PEAR::raiseError("$path MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('IMAGE element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('IMAGE element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "INFO":
             if ($path == "/PLAYLIST/INFO") {
                 // This is the content of the playlist info.
                 if ($this->_xspf->setInfo($data) == false) {
-                    $this->_xspf->_parse_error =& PEAR::raiseError("$path MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
+                    $this->_xspf->_parse_error = PEAR::raiseError("$path MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } elseif ($path == "/PLAYLIST/TRACKLIST/TRACK/INFO") {
                 // This is the content of the track info.
                 if ($this->_curr_track->setInfo($data) == false) {
-                    $this->_xspf->_parse_error =& PEAR::raiseError("$path MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
+                    $this->_xspf->_parse_error = PEAR::raiseError("$path MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('INFO element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('INFO element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "LICENSE":
             if ($path == "/PLAYLIST/LICENSE") {
                 // This is the content of the playlist license.
                 if ($this->_xspf->setLicense($data) == false) {
-                    $this->_xspf->_parse_error =& PEAR::raiseError("$path MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
+                    $this->_xspf->_parse_error = PEAR::raiseError("$path MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('LICENSE element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('LICENSE element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "LINK":
             if ($path == "/PLAYLIST/LINK" || $path == "/PLAYLIST/TRACKLIST/TRACK/LINK") {
                 // This is the content of a link element.
                 if ($this->_curr_link->setContent($data) == false) {
-                    $this->_xspf->_parse_error =& PEAR::raiseError("$path MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
+                    $this->_xspf->_parse_error = PEAR::raiseError("$path MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('LINK element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('LINK element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "LOCATION":
             $location = new File_XSPF_Location();
             if ($location->setUrl($data) == false) {
-                $this->_xspf->_parse_error =& PEAR::raiseError("$path MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError("$path MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
             }
             if ($path == "/PLAYLIST/LOCATION") {
                 // This is the content of the playlist location.
@@ -274,7 +274,7 @@ class File_XSPF_Handler
                 // This is the content of a track location.
                 $this->_curr_track->addLocation($location);
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('LOCATION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('LOCATION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "META":
@@ -282,7 +282,7 @@ class File_XSPF_Handler
                 // This is the content of a meta element.
                 $this->_curr_meta->setContent($data);;
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('META element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('META element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "TITLE":
@@ -293,17 +293,17 @@ class File_XSPF_Handler
                 // This is the content of thr track title.
                 $this->_curr_track->setTitle($data);
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('TITLE element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('TITLE element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "TRACKNUM":
             if ($path == "/PLAYLIST/TRACKLIST/TRACK/TRACKNUM") {
                 // This is the content of the track number.
                 if ($this->_curr_track->setTrackNumber($data) === false) {
-                    $this->_xspf->_parse_error =& PEAR::raiseError("$path MUST contain a non-negative integer.", File_XSPF::ERROR_PARSING_FAILURE);
+                    $this->_xspf->_parse_error = PEAR::raiseError("$path MUST contain a non-negative integer.", File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('TRACKNUM element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('TRACKNUM element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         }
@@ -346,7 +346,7 @@ class File_XSPF_Handler
                 // This extension element belongs to a TRACK/
                 $this->_curr_track->addExtension($this->_curr_extn);
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('EXTENSION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('EXTENSION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "LINK":
@@ -359,7 +359,7 @@ class File_XSPF_Handler
                 // This link element belongs to a TRACK/
                 $this->_curr_track->addLink($this->_curr_link);
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('LINK element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('LINK element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "META":
@@ -372,16 +372,16 @@ class File_XSPF_Handler
                 // This meta element belongs to a TRACK/
                 $this->_curr_track->addMeta($this->_curr_meta);
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('META element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('META element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "PLAYLIST":
             if ($path == "/PLAYLIST") {
                 if ($this->_xspf->_count_tracklist != 1) {
-                    $this->_xspf->_parse_error =& PEAR::raiseError('/PLAYLIST MUST contain one TRACKLIST element.', File_XSPF::ERROR_PARSING_FAILURE);
+                    $this->_xspf->_parse_error = PEAR::raiseError('/PLAYLIST MUST contain one TRACKLIST element.', File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('PLAYLIST element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('PLAYLIST element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "TRACK":
@@ -390,7 +390,7 @@ class File_XSPF_Handler
                 // we can now close it and add it to the /PLAYLIST/
                 $this->_xspf->addTrack($this->_curr_track);
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('TRACK element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('TRACK element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         }
@@ -441,7 +441,7 @@ class File_XSPF_Handler
                     $this->_xspf->_parse_error = PEAR::raiseError("$path contains too many ALBUM elements.", File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('ALBUM element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('ALBUM element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "ANNOTATION":
@@ -459,7 +459,7 @@ class File_XSPF_Handler
                 }
                 break;
             default:
-                $this->_xspf->_parse_error =& PEAR::raiseError('ANNOTATION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('ANNOTATION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "ATTRIBUTION":
@@ -469,7 +469,7 @@ class File_XSPF_Handler
                     $this->_xspf->_parse_error = PEAR::raiseError("$path contains too many ATTRIBUTION elements.", File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('ATTRIBUTION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('ATTRIBUTION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "CREATOR":
@@ -487,7 +487,7 @@ class File_XSPF_Handler
                 }
                 break;
             default:
-                $this->_xspf->_parse_error =& PEAR::raiseError('CREATOR element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('CREATOR element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "DATE":
@@ -497,7 +497,7 @@ class File_XSPF_Handler
                     $this->_xspf->_parse_error = PEAR::raiseError("$path contains too many DATE elements.", File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('DATE element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('DATE element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "DURATION":
@@ -507,7 +507,7 @@ class File_XSPF_Handler
                     $this->_xspf->_parse_error = PEAR::raiseError("$path contains too many DURATION elements.", File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('DURATION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('DURATION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "EXTENSION":
@@ -518,11 +518,11 @@ class File_XSPF_Handler
                 $this->_curr_extn = new File_XSPF_Extension();
                 if (isset($attribs['APPLICATION'])) {
                     if ($this->_curr_extn->setApplication($attribs['APPLICATION']) == false) {
-                        $this->_xspf->_parse_error =& PEAR::raiseError("$path/EXTENSION attribute APPLICATION MUST contain a valid URI.", File_XSPF::ERROR_PARSING_FAILURE);
+                        $this->_xspf->_parse_error = PEAR::raiseError("$path/EXTENSION attribute APPLICATION MUST contain a valid URI.", File_XSPF::ERROR_PARSING_FAILURE);
                     }
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('EXTENSION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('EXTENSION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "IDENTIFIER":
@@ -532,7 +532,7 @@ class File_XSPF_Handler
                     $this->_xspf->_parse_error = PEAR::raiseError("$path contains too many IDENTIFIER elements.", File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } elseif ($path != "/PLAYLIST/ATTRIBUTION" && $path != "/PLAYLIST/TRACKLIST/TRACK") {
-                $this->_xspf->_parse_error =& PEAR::raiseError('IDENTIFIER element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('IDENTIFIER element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "IMAGE":
@@ -550,7 +550,7 @@ class File_XSPF_Handler
                 }
                 break;
             default:
-                $this->_xspf->_parse_error =& PEAR::raiseError('IMAGE element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('IMAGE element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "INFO":
@@ -568,7 +568,7 @@ class File_XSPF_Handler
                 }
                 break;
             default:
-                $this->_xspf->_parse_error =& PEAR::raiseError('INFO element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('INFO element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "LICENSE":
@@ -578,7 +578,7 @@ class File_XSPF_Handler
                     $this->_xspf->_parse_error = PEAR::raiseError("$path contains too many LICENSE elements.", File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('LICENSE element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('LICENSE element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "LINK":
@@ -589,11 +589,11 @@ class File_XSPF_Handler
                 $this->_curr_link = new File_XSPF_Link();
                 if (isset($attribs['REL'])) {
                     if ($this->_curr_link->setRelationship($attribs['REL']) == false) {
-                        $this->_xspf->_parse_error =& PEAR::raiseError("$path/LINK attribute REL MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
+                        $this->_xspf->_parse_error = PEAR::raiseError("$path/LINK attribute REL MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
                     }
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('LINK element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('LINK element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "LOCATION":
@@ -603,7 +603,7 @@ class File_XSPF_Handler
                     $this->_xspf->_parse_error = PEAR::raiseError("$path contains too many LOCATION elements.", File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } elseif ($path != "/PLAYLIST/ATTRIBUTION" && $path != "/PLAYLIST/TRACKLIST/TRACK") {
-                $this->_xspf->_parse_error =& PEAR::raiseError('LOCATION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('LOCATION element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
         case "META":
             if ($path == "/PLAYLIST" || $path == "/PLAYLIST/ATTRIBUTION" || $path == "/PLAYLIST/TRACKLIST/TRACK") {
@@ -613,11 +613,11 @@ class File_XSPF_Handler
                 $this->_curr_meta = new File_XSPF_Meta();
                 if (isset($attribs['REL'])) {
                     if ($this->_curr_meta->setRelationship($attribs['REL']) == false) {
-                        $this->_xspf->_parse_error =& PEAR::raiseError("$path/META attribute REL MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
+                        $this->_xspf->_parse_error = PEAR::raiseError("$path/META attribute REL MUST contain a valid URL.", File_XSPF::ERROR_PARSING_FAILURE);
                     }
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('META element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('META element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "PLAYLIST":
@@ -642,7 +642,7 @@ class File_XSPF_Handler
                     $this->_xspf->_parse_error = PEAR::raiseError('/PLAYLIST MUST have a XMLNS attribute.', File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('PLAYLIST element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('PLAYLIST element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "TITLE":
@@ -660,7 +660,7 @@ class File_XSPF_Handler
                 }
                 break;
             default:
-                $this->_xspf->_parse_error =& PEAR::raiseError('TITLE element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('TITLE element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "TRACK":
@@ -670,7 +670,7 @@ class File_XSPF_Handler
             if ($path == "/PLAYLIST/TRACKLIST") {
                 $this->_curr_track = new File_XSPF_Track();
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('TRACK element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('TRACK element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "TRACKNUM":
@@ -680,7 +680,7 @@ class File_XSPF_Handler
                     $this->_xspf->_parse_error = PEAR::raiseError("$path contains too many TRACKNUM elements.", File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('TRACKNUM element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('TRACKNUM element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         case "TRACKLIST":
@@ -690,7 +690,7 @@ class File_XSPF_Handler
                     $this->_xspf->_parse_error = PEAR::raiseError('/PLAYLIST contains too many TRACKLIST elements.', File_XSPF::ERROR_PARSING_FAILURE);
                 }
             } else {
-                $this->_xspf->_parse_error =& PEAR::raiseError('TRACKLIST element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
+                $this->_xspf->_parse_error = PEAR::raiseError('TRACKLIST element found in illegal position.', File_XSPF::ERROR_PARSING_FAILURE);
             }
             break;
         default:

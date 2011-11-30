@@ -19,7 +19,7 @@
  * | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA |
  * +---------------------------------------------------------------------------+
  *
- * PHP version 4
+ * PHP version 5
  *
  * @category  File
  * @package   File_XSPF
@@ -41,7 +41,7 @@ require_once 'MP3/Id.php';
  *
  * @return void
  */
-function recurseLibrary($path, &$xspf)
+function recurseLibrary($path, File_XSPF $xspf)
 {
     // Open the directory for reading.
     $dp = opendir($path);
@@ -70,7 +70,7 @@ function recurseLibrary($path, &$xspf)
                 
             if ($pathinfo['extension'] == 'ogg') {
                 // Instantiate a new File_Ogg instance.
-                $ogg =& new File_Ogg($realpath);
+                $ogg = new File_Ogg($realpath);
     
                 // Check for a vorbis logical stream.
                 if (! $ogg->hasStream(OGG_STREAM_VORBIS)) {
@@ -92,7 +92,7 @@ function recurseLibrary($path, &$xspf)
                 $number = $vorbis->getTrackNumber();
                 $length = $vorbis->getLength();
             } else {
-                $id3 =& new MP3_Id();
+                $id3 = new MP3_Id();
                 
                 $id3->read($realpath);
                 
@@ -104,7 +104,7 @@ function recurseLibrary($path, &$xspf)
             }
             
             // Instantiate the new File_XSPF_Track instance.
-            $track =& new File_XSPF_Track();
+            $track = new File_XSPF_Track();
             $track->setAlbum($album);
             $track->setCreator($artist);
             $track->setTitle($title);
@@ -121,7 +121,7 @@ function recurseLibrary($path, &$xspf)
 }
 
 // Instantiate the new playlist.
-$xspf =& new File_XSPF();
+$xspf = new File_XSPF();
 $xspf->setAnnotation('This is a collection of all my Ogg Vorbis tracks.');
 $xspf->setCreator('Joe Bloggs');
 // This playlist is automatically generated.

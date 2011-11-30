@@ -647,14 +647,14 @@ class File_XSPF_Track
      * This method adds this object to the passed XML parent node, which is an
      * instance of XML_Tree_Node.
      *
-     * @param XML_Tree_Node &$parent Parent node
+     * @param XML_Tree_Node $parent Parent node
      *
      * @access private
      * @return void
      */
-    function _toXml(&$parent)
+    function _toXml($parent)
     {
-        $track =& $parent->addChild('track');
+        $track = $parent->addChild('track');
         if ($this->_album) {
             $track->addChild('album', $this->getAlbum());
         }

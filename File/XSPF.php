@@ -348,8 +348,8 @@ class File_XSPF
      */
     function parseFile($path)
     {
-        $parser =& new XML_Parser();
-        $handle =& new File_XSPF_Handler($this);
+        $parser = new XML_Parser();
+        $handle = new File_XSPF_Handler($this);
 
         $result = $parser->setInputFile($path);
         if (PEAR::isError($result)) {
@@ -382,8 +382,8 @@ class File_XSPF
      */
     function parse($text)
     {
-        $parser =& new XML_Parser();
-        $handle =& new File_XSPF_Handler($this);
+        $parser = new XML_Parser();
+        $handle = new File_XSPF_Handler($this);
 
         $result = $parser->setInputString($text);
         if (PEAR::isError($result)) {
@@ -1081,10 +1081,10 @@ class File_XSPF
      */
     function toSMIL($filename)
     {
-        $tree =& new XML_Tree();
-        $root =& $tree->addRoot('smil');
-        $body =& $root->addChild('body');
-        $seq  =& $body->addChild('seq');
+        $tree = new XML_Tree();
+        $root = $tree->addRoot('smil');
+        $body = $root->addChild('body');
+        $seq  = $body->addChild('seq');
 
         foreach ($this->_tracks as $track) {
             $locations = $track->getLocation();
@@ -1141,15 +1141,15 @@ class File_XSPF
      */
     function toString()
     {
-        $tree =& new XML_Tree();
-        $root =& $tree->addRoot('playlist', '',
+        $tree = new XML_Tree();
+        $root = $tree->addRoot('playlist', '',
                                     array('version' => $this->_version,
                                             'xmlns' => $this->_xmlns));
         if ($this->_annotation) {
             $root->addChild('annotation', $this->getAnnotation());
         }
         if (count($this->_attributions)) {
-            $attr =& $root->addChild('attribution');
+            $attr = $root->addChild('attribution');
             foreach ($this->_attributions as $attribution) {
                 $attribution->_toXml($attr);
             }
@@ -1189,7 +1189,7 @@ class File_XSPF
             $root->addChild('title', $this->getTitle());
         }
         if (count($this->_tracks)) {
-            $tracklist =& $root->addChild('trackList');
+            $tracklist = $root->addChild('trackList');
             foreach ($this->_tracks as $track) {
                 $track->_toXml($tracklist);
             }

@@ -19,7 +19,7 @@
  * | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA |
  * +---------------------------------------------------------------------------+
  *
- * PHP version 4
+ * PHP version 5
  *
  * @category  File
  * @package   File_XSPF
@@ -32,9 +32,9 @@
 require_once 'File/XSPF.php';
 
 // Open my 'favourites' playlist.
-$favs =& new File_XSPF();
+$favs = new File_XSPF();
 $favs->parseFile('/home/joe/tunes/favourites.xspf');
-$radiohead =& new File_XSPF();
+$radiohead = new File_XSPF();
 
 $radiohead->setCreator('Joe Bloggs');
 $radiohead->setTitle('My Radiohead Playlist');
