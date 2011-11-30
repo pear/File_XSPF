@@ -11,7 +11,7 @@
   <active>yes</active>
  </lead>
  <date>2011-12-01</date>
- <time>00:10:45</time>
+ <time>00:22:42</time>
  <version>
   <release>0.3.0</release>
   <api>0.3.0</api>
@@ -28,18 +28,18 @@ Bug #17487 File_XSPF::setLocation($location) Bug
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
-   <file baseinstalldir="/" md5sum="4bd7a91f145b03b12b91176979aa1c97" name="File/XSPF.php" role="php" />
-   <file baseinstalldir="/" md5sum="25f6cdc7f3f3bd00d037114b0bf70b33" name="File/examples/example_1.php" role="php" />
-   <file baseinstalldir="/" md5sum="4f87810a03d7393e412740f9c50f8245" name="File/examples/example_2.php" role="php" />
-   <file baseinstalldir="/" md5sum="1f2d308dd872b6cdc8198ee1c5a3c874" name="File/examples/example_3.php" role="php" />
-   <file baseinstalldir="/" md5sum="0771882294379903fa2064111bd259cf" name="File/examples/example_4.php" role="php" />
-   <file baseinstalldir="/" md5sum="abcf4109766c174fc51670c6a8ae05a3" name="File/XSPF/Extension.php" role="php" />
-   <file baseinstalldir="/" md5sum="18f4847a2b9a4a1afd531c6da06b1f83" name="File/XSPF/Handler.php" role="php" />
-   <file baseinstalldir="/" md5sum="1a9df6da6d1055e36a6d6daf7899065a" name="File/XSPF/Identifier.php" role="php" />
-   <file baseinstalldir="/" md5sum="7e9ca0b7849fc31aebc81e3ef9a9f53d" name="File/XSPF/Link.php" role="php" />
-   <file baseinstalldir="/" md5sum="03cc1aa9d2e6eb2be8d08a898a8f2ca7" name="File/XSPF/Location.php" role="php" />
-   <file baseinstalldir="/" md5sum="1cd2cf2c2c75443a25e3e3e0fc9434e9" name="File/XSPF/Meta.php" role="php" />
-   <file baseinstalldir="/" md5sum="abbe84fdbab7fdc047ae66c84a3c05ec" name="File/XSPF/Track.php" role="php" />
+   <file baseinstalldir="/" md5sum="d330dc54973459334d5910c52dad2c53" name="examples/example_1.php" role="doc" />
+   <file baseinstalldir="/" md5sum="a2deaf12d330524ea76aa542c2bb88d0" name="examples/example_2.php" role="doc" />
+   <file baseinstalldir="/" md5sum="37f5e6d535629b371d1ea806a31489a1" name="examples/example_3.php" role="doc" />
+   <file baseinstalldir="/" md5sum="b45a62b16ebfde1e7e997a3292a2d4ac" name="examples/example_4.php" role="doc" />
+   <file baseinstalldir="/" md5sum="217ce6fe829591ea8e9723d6d52d5595" name="File/XSPF.php" role="php" />
+   <file baseinstalldir="/" md5sum="7ac8df184e6e7505689fb0b717ced0ed" name="File/XSPF/Extension.php" role="php" />
+   <file baseinstalldir="/" md5sum="6c5ec7b02efe9a91292b2eb955b0d38c" name="File/XSPF/Handler.php" role="php" />
+   <file baseinstalldir="/" md5sum="d3fd4ccb2fcbf57d1db685c9bdf02bc3" name="File/XSPF/Identifier.php" role="php" />
+   <file baseinstalldir="/" md5sum="5ff74aa3998aad3ebf89c79ed68d99c6" name="File/XSPF/Link.php" role="php" />
+   <file baseinstalldir="/" md5sum="153c07c280de7d9039ea49733e3afd4a" name="File/XSPF/Location.php" role="php" />
+   <file baseinstalldir="/" md5sum="5288e74f8ddd04faded66e8b9734f292" name="File/XSPF/Meta.php" role="php" />
+   <file baseinstalldir="/" md5sum="9d62a7e93850b40940a3beb268a0353d" name="File/XSPF/Track.php" role="php" />
    <file baseinstalldir="/" md5sum="0f62e52949788877420a48b49eb416eb" name="README" role="data" />
   </dir>
  </contents>
