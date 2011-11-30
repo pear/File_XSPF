@@ -19,7 +19,7 @@
  * | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA |
  * +---------------------------------------------------------------------------+
  *
- * PHP version 4
+ * PHP version 5
  *
  * @category  File
  * @package   File_XSPF

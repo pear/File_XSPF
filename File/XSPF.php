@@ -19,7 +19,7 @@
  * | Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA |
  * +---------------------------------------------------------------------------+
  *
- * PHP version 4
+ * PHP version 5
  *
  * @category  File
  * @package   File_XSPF
@@ -44,44 +44,6 @@ require_once 'XML/Parser.php';
 require_once 'XML/Tree.php';
 
 /**
- * Constant to identify an attribution as a location element.
- *
- * This constant may be passed as the second argument to the
- * {@link File_XSPF::addAttribution()} method of this class to
- * signify that the passed data is a location element.
- *
- * @link    File_XSPF::addAttribution()
- */
-define("FILE_XSPF_ATTRIBUTION_LOCATION", 1);
-/**
- * Constant to identify an attribution as an identifier element.
- *
- * This constant may be passed as the second argument to the
- * {@link File_XSPF::addAttribution()} method of this class to
- * signify that the passed data is an identifier element.
- *
- * @link    File_XSPF::addAttribution()
- */
-define('FILE_XSPF_ATTRIBUTION_IDENTIFIER', 2);
-
-/**
- * This constant signifies an error closing a file.
- */
-define('FILE_XSPF_ERROR_FILE_CLOSURE', 1);
-/**
- * This constant signifies an error opening a file.
- */
-define('FILE_XSPF_ERROR_FILE_OPENING', 2);
-/**
- * This constant signfies an error writing to a file.
- */
-define('FILE_XSPF_ERROR_FILE_WRITING', 3);
-/**
- * This constant signifies an error parsing the XSPF file.
- */
-define('FILE_XSPF_ERROR_PARSING_FAILURE', 4);
-
-/**
  * This is the main class for this package.
  *
  * This class serves as the central point for all other classes in this
@@ -100,6 +62,45 @@ define('FILE_XSPF_ERROR_PARSING_FAILURE', 4);
  */
 class File_XSPF
 {
+
+    /**
+     * Constant to identify an attribution as a location element.
+     *
+     * This constant may be passed as the second argument to the
+     * {@link File_XSPF::addAttribution()} method of this class to
+     * signify that the passed data is a location element.
+     *
+     * @link    File_XSPF::addAttribution()
+     */
+    const ATTRIBUTION_LOCATION = 1;
+    /**
+     * Constant to identify an attribution as an identifier element.
+     *
+     * This constant may be passed as the second argument to the
+     * {@link File_XSPF::addAttribution()} method of this class to
+     * signify that the passed data is an identifier element.
+     *
+     * @link    File_XSPF::addAttribution()
+     */
+    const ATTRIBUTION_IDENTIFIER = 2;
+
+    /**
+     * This constant signifies an error closing a file.
+     */
+    const ERROR_FILE_CLOSURE = 1;
+    /**
+     * This constant signifies an error opening a file.
+     */
+    const ERROR_FILE_OPENING = 2;
+    /**
+     * This constant signfies an error writing to a file.
+     */
+    const ERROR_FILE_WRITING = 3;
+    /**
+     * This constant signifies an error parsing the XSPF file.
+     */
+    const ERROR_PARSING_FAILURE = 4;
+
     /**
      * A human-readable comment on this playlist.
      *
@@ -559,8 +560,8 @@ class File_XSPF
 
         $attributions = array();
         foreach ($this->_attributions as $attribution) {
-            $is_identifier = $filter & FILE_XSPF_ATTRIBUTION_IDENTIFIER;
-            $is_location   = $filter & FILE_XSPF_ATTRIBUTION_LOCATION;
+            $is_identifier = $filter & File_XSPF::ATTRIBUTION_IDENTIFIER;
+            $is_location   = $filter & File_XSPF::ATTRIBUTION_LOCATION;
 
             if ($is_identifier && is_a($attribution, 'file_xspf_identifier')) {
                 $attributions[] = $attribution;
@@ -1014,15 +1015,15 @@ class File_XSPF
         $fp = @fopen($filename, "w");
         if (! $fp) {
             return PEAR::raiseError("Could Not Open File",
-                                    FILE_XSPF_ERROR_FILE_OPENING);
+                                    File_XSPF::ERROR_FILE_OPENING);
         }
         if (! fwrite($fp, $this->toString())) {
             return PEAR::raiseError("Writing to File Failed",
-                                    FILE_XSPF_ERROR_FILE_WRITING);
+                                    File_XSPF::ERROR_FILE_WRITING);
         }
         if (! fclose($fp)) {
             return PEAR::raiseError("Failed to Close File",
-                                    FILE_XSPT_ERROR_FILE_CLOSURE);
+                                    File_XSPF::ERROR_FILE_CLOSURE);
         }
         return true;
     }
@@ -1045,20 +1046,20 @@ class File_XSPF
         $fp = @fopen($filename, "w");
         if (! $fp) {
             return PEAR::raiseError("Could Not Open File",
-                                    FILE_XSPF_ERROR_FILE_OPENING);
+                                    File_XSPF::ERROR_FILE_OPENING);
         }
         foreach ($this->_tracks as $track) {
             $locations = $track->getLocation();
             foreach ($locations as $location) {
                 if (! fwrite($fp, $location . "\n")) {
                     return PEAR::raiseError("Writing to File Failed",
-                                            FILE_XSPF_ERROR_FILE_WRITING);
+                                            File_XSPF::ERROR_FILE_WRITING);
                 }
             }
         }
         if (! fclose($fp)) {
             return PEAR::raiseError("Failed to Close File",
-                                    FILE_XSPT_ERROR_FILE_CLOSURE);
+                                    File_XSPF::ERROR_FILE_CLOSURE);
         }
         return true;
     }
@@ -1101,15 +1102,15 @@ class File_XSPF
         $fp = @fopen($filename, "w");
         if (!$fp) {
             return PEAR::raiseError("Could Not Open File",
-                                    FILE_XSPF_ERROR_FILE_OPENING);
+                                    File_XSPF::ERROR_FILE_OPENING);
         }
         if (!fwrite($fp, $tree->get())) {
             return PEAR::raiseError("Writing to File Failed",
-                                    FILE_XSPF_ERROR_FILE_WRITING);
+                                    File_XSPF::ERROR_FILE_WRITING);
         }
         if (!fclose($fp)) {
             return PEAR::raiseError("Failed to Close File",
-                                    FILE_XSPT_ERROR_FILE_CLOSURE);
+                                    File_XSPF::ERROR_FILE_CLOSURE);
         }
         return true;
     }
