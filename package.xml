@@ -10,10 +10,10 @@
   <email>david@grant.org.uk</email>
   <active>yes</active>
  </lead>
- <date>2011-12-01</date>
- <time>00:22:42</time>
+ <date>2012-04-01</date>
+ <time>02:47:24</time>
  <version>
-  <release>0.3.0</release>
+  <release>0.3.1</release>
   <api>0.3.0</api>
  </version>
  <stability>
@@ -23,8 +23,7 @@
  <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
  <notes>
 QA release
-PHP 5 as a minimum dependency
-Bug #17487 File_XSPF::setLocation($location) Bug
+Bug #19355 Distribution does not include Exception class
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -32,13 +31,14 @@ Bug #17487 File_XSPF::setLocation($location) Bug
    <file baseinstalldir="/" md5sum="a2deaf12d330524ea76aa542c2bb88d0" name="examples/example_2.php" role="doc" />
    <file baseinstalldir="/" md5sum="37f5e6d535629b371d1ea806a31489a1" name="examples/example_3.php" role="doc" />
    <file baseinstalldir="/" md5sum="b45a62b16ebfde1e7e997a3292a2d4ac" name="examples/example_4.php" role="doc" />
-   <file baseinstalldir="/" md5sum="217ce6fe829591ea8e9723d6d52d5595" name="File/XSPF.php" role="php" />
-   <file baseinstalldir="/" md5sum="7ac8df184e6e7505689fb0b717ced0ed" name="File/XSPF/Extension.php" role="php" />
-   <file baseinstalldir="/" md5sum="6c5ec7b02efe9a91292b2eb955b0d38c" name="File/XSPF/Handler.php" role="php" />
-   <file baseinstalldir="/" md5sum="d3fd4ccb2fcbf57d1db685c9bdf02bc3" name="File/XSPF/Identifier.php" role="php" />
+   <file baseinstalldir="/" md5sum="7def0d6503dd572b0d83256ca33c2a49" name="File/XSPF.php" role="php" />
+   <file baseinstalldir="/" md5sum="e4330a983b1f7879c6f6dfd7319453a7" name="File/XSPF/Exception.php" role="php" />
+   <file baseinstalldir="/" md5sum="b474f80af5e05abfc1e66627be4cb4e6" name="File/XSPF/Extension.php" role="php" />
+   <file baseinstalldir="/" md5sum="89cc10d3a4420b6e3e4939ed0a2b1dca" name="File/XSPF/Handler.php" role="php" />
+   <file baseinstalldir="/" md5sum="36cabbfad524d4481fe07d8e9c0858f8" name="File/XSPF/Identifier.php" role="php" />
    <file baseinstalldir="/" md5sum="5ff74aa3998aad3ebf89c79ed68d99c6" name="File/XSPF/Link.php" role="php" />
-   <file baseinstalldir="/" md5sum="153c07c280de7d9039ea49733e3afd4a" name="File/XSPF/Location.php" role="php" />
-   <file baseinstalldir="/" md5sum="5288e74f8ddd04faded66e8b9734f292" name="File/XSPF/Meta.php" role="php" />
+   <file baseinstalldir="/" md5sum="2119aad10bcbfd703884d35e05b2dc25" name="File/XSPF/Location.php" role="php" />
+   <file baseinstalldir="/" md5sum="c81322f21f869b18bca3eac962af638a" name="File/XSPF/Meta.php" role="php" />
    <file baseinstalldir="/" md5sum="9d62a7e93850b40940a3beb268a0353d" name="File/XSPF/Track.php" role="php" />
    <file baseinstalldir="/" md5sum="0f62e52949788877420a48b49eb416eb" name="README" role="data" />
   </dir>
@@ -179,6 +179,22 @@ Bug #18370	PHP Catchable fatal error
 QA release
 PHP 5 as a minimum dependency
 Bug #17487 File_XSPF::setLocation($location) Bug
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>0.3.1</release>
+    <api>0.3.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2012-04-01</date>
+   <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
+   <notes>
+QA release
+Bug #19355 Distribution does not include Exception class
    </notes>
   </release>
  </changelog>
