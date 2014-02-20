@@ -1,0 +1,32 @@
+{
+    "authors": [
+        {
+            "email": "david@grant.org.uk",
+            "name": "David Grant",
+            "role": "Lead"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "File": "./"
+        }
+    },
+    "description": "More info available on: http://pear.php.net/package/File_XSPF",
+    "include-path": [
+        "./"
+    ],
+    "license": "LGPL",
+    "name": "pear/file_xspf",
+    "support": {
+        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=File_XSPF",
+        "source": "https://github.com/pear/File_XSPF"
+    },
+    "type": "library",
+    "require": {
+        "pear/pear_exception": "*",
+        "pear/validate": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    }
+}
